@@ -1,4 +1,4 @@
-import './global.css';
+import './utils/global.css';
 import styled, { ThemeProvider } from "styled-components";
 import { useState } from 'react';
 import { darkTheme, lightTheme } from './utils/Theme';
@@ -10,7 +10,7 @@ import Navbar from './components/Navbar';
 import Register from './pages/Register';
 
 function App() {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
   const [user, setUser] = useState(false);
   return (
 
@@ -62,5 +62,5 @@ const Main = styled.div`
 `;
 
 const Wrapper = styled.div`
-  padding: 22px 96px;
+
 `;
