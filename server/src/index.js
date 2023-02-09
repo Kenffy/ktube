@@ -6,10 +6,13 @@ import videoRoutes from "./routes/videos.js";
 import commentRoutes from "./routes/comments.js";
 import authRoutes from "./routes/auth.js";
 import cookieParser from "cookie-parser";
+import functions from "firebase-functions";
+import cors from "cors";
 
 
 const app = express();
 dotenv.config();
+app.use(cors());
 
 const connect = () => {
   mongoose
@@ -41,7 +44,11 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.SERVER, () => {
   connect();
-  console.log("Connected to Server");
+  console.log("Server is listening on port: "+process.env.SERVER);
 });
+
+export const server = functions.https.onRequest(app);
+
+//exports.server = functions.https.onRequest(app);
