@@ -84,8 +84,8 @@ color: var(--black-4);
 `;
 
 const LogoIcon = styled.img`
-height: 35px;
-width: 35px;
+height: 25px;
+width: 25px;
 cursor: pointer;
 `;
 
