@@ -1,0 +1,7 @@
+.container {
+  height: 70px;
+  box-shadow: var(--box-shadow);
+}
+
+.wrapper {
+}
