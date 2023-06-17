@@ -23,7 +23,6 @@ export const ThemeContext = createContext<{
 const reducer = (state: StateType, action: ActionType) => {
   switch (action.type) {
     case "TOGGLE_THEME":
-      console.log("test dispatch");
       return {
         ...state,
         theme: state.theme === "dark" ? "light" : "dark",
