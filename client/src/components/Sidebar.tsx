@@ -8,14 +8,20 @@ type sideProps = {
 };
 
 export const Sidebar = ({ active, onClose }: sideProps) => {
-  const { dispatch } = useContext(ThemeContext);
+  const { state, dispatch } = useContext(ThemeContext);
+  const theme = state.theme === "light" ? styles.light : styles.dark;
   return (
     <div className={`${styles.container} ${active && styles.active}`}>
-      Sidebar
-      <button onClick={onClose}>X</button>
-      <button onClick={() => dispatch({ type: "TOGGLE_THEME" })}>
-        Toggle Theme
-      </button>
+      <div className={styles.wrapper}>
+        <div className={styles.background} onClick={onClose}></div>
+        <div className={`${styles.content} ${theme}`}>
+          Sidebar
+          <button onClick={onClose}>X</button>
+          <button onClick={() => dispatch({ type: "TOGGLE_THEME" })}>
+            Toggle Theme
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
