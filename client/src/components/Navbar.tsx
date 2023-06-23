@@ -61,38 +61,22 @@ export const Navbar = () => {
         <div className={styles.options}>
           {onSearch ? (
             <div
-              className={`${styles.icon} ${styles.mobile}`}
+              className={`${styles.icon}`}
               onClick={() => setOnSearch(false)}
             >
               <i className="fa-solid fa-arrow-left"></i>
             </div>
           ) : (
-            <div
-              className={`${styles.icon} ${styles.mobile}`}
-              onClick={() => setOnSearch(true)}
-            >
+            <div className={`${styles.icon}`} onClick={() => setOnSearch(true)}>
               <i className="fa-solid fa-magnifying-glass"></i>
             </div>
           )}
-          {onSearch && (
-            <div className={`${styles.search} ${styles.mobile}`}>
-              <i className="fa-solid fa-magnifying-glass"></i>
-              <input
-                onChange={handleChange}
-                type="text"
-                placeholder="Search"
-                onFocus={() => setOnFocus(true)}
-                onBlur={() => setOnFocus(false)}
-              />
 
-              {onFocus && search !== "" && (
-                <i className="fa-solid fa-xmark"></i>
-              )}
-            </div>
-          )}
-          {!onSearch && (
+          {onSearch ? (
             <div className={styles.search}>
-              <i className="fa-solid fa-magnifying-glass"></i>
+              <div className={styles.iconWrapper}>
+                <i className="fa-solid fa-magnifying-glass"></i>
+              </div>
               <input
                 onChange={handleChange}
                 type="text"
@@ -100,35 +84,79 @@ export const Navbar = () => {
                 onFocus={() => setOnFocus(true)}
                 onBlur={() => setOnFocus(false)}
               />
-              {onFocus && search !== "" && (
-                <i className="fa-solid fa-xmark"></i>
-              )}
-            </div>
-          )}
-          {!onSearch && (
-            <div
-              className={styles.avatar}
-              tabIndex={0}
-              onBlur={() => setOnMenu(false)}
-              onClick={() => setOnMenu((prev) => !prev)}
-            >
-              <img src={avatar} alt="avatar" />
-              {onMenu && (
-                <div className={`${styles.menu} ${theme}`}>
-                  <span onClick={handleLogin}>Login</span>
-                  <span onClick={handleRegister}>Register</span>
-                  <span onClick={handleLogout}>Logout</span>
-                </div>
-              )}
-            </div>
-          )}
-          {!onSearch && (
-            <div className={styles.sideBar}>
-              <div className={styles.icon} onClick={handleOpen}>
-                <i className="fa-solid fa-bars"></i>
+              <div className={styles.iconWrapper}>
+                {onFocus && search !== "" && (
+                  <i className="fa-solid fa-xmark"></i>
+                )}
               </div>
             </div>
+          ) : (
+            <>
+              <div
+                className={styles.avatar}
+                tabIndex={0}
+                onBlur={() => setOnMenu(false)}
+                onClick={() => setOnMenu((prev) => !prev)}
+              >
+                <img src={avatar} alt="avatar" />
+                {onMenu && (
+                  <div className={`${styles.menu} ${theme}`}>
+                    <span onClick={handleLogin}>Login</span>
+                    <span onClick={handleRegister}>Register</span>
+                    <span onClick={handleLogout}>Logout</span>
+                  </div>
+                )}
+              </div>
+
+              <div className={styles.sideBar}>
+                <div className={styles.icon} onClick={handleOpen}>
+                  <i className="fa-solid fa-bars"></i>
+                </div>
+              </div>
+            </>
           )}
+        </div>
+
+        <div className={styles.options}>
+          <div className={styles.search}>
+            <div className={styles.iconWrapper}>
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <input
+              onChange={handleChange}
+              type="text"
+              placeholder="Search"
+              onFocus={() => setOnFocus(true)}
+              onBlur={() => setOnFocus(false)}
+            />
+            <div className={styles.iconWrapper}>
+              {onFocus && search !== "" && (
+                <i className="fa-solid fa-xmark"></i>
+              )}
+            </div>
+          </div>
+
+          <div
+            className={styles.avatar}
+            tabIndex={0}
+            onBlur={() => setOnMenu(false)}
+            onClick={() => setOnMenu((prev) => !prev)}
+          >
+            <img src={avatar} alt="avatar" />
+            {onMenu && (
+              <div className={`${styles.menu} ${theme}`}>
+                <span onClick={handleLogin}>Login</span>
+                <span onClick={handleRegister}>Register</span>
+                <span onClick={handleLogout}>Logout</span>
+              </div>
+            )}
+          </div>
+
+          <div className={styles.sideBar}>
+            <div className={styles.icon} onClick={handleOpen}>
+              <i className="fa-solid fa-bars"></i>
+            </div>
+          </div>
         </div>
       </div>
       <Sidebar active={onSide} onClose={handleClose} />
