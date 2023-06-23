@@ -1,0 +1,95 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container.light {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.container.dark {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+
+.wrapper.light {
+  background-color: white;
+}
+
+.wrapper.dark {
+  background-color: var(--bg-dark);
+}
+
+.heading {
+  font-size: 1.7rem;
+  margin-bottom: 1rem;
+}
+
+.errorMsg {
+  padding-top: 1rem;
+  color: red;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  padding: 10px 15px;
+  border: none;
+  outline: none;
+  margin-top: 10px;
+  border-radius: 3px;
+  color: var(--text-light);
+  border: var(--border-light);
+  background-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.button {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: 500;
+  border: var(--border-light);
+}
+
+.terms {
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.action {
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.action a {
+  font-size: 0.9rem;
+}
+
+.action:hover a {
+  text-decoration: underline;
+}
+
+@media (max-width: 580px) {
+  .wrapper {
+    width: 95%;
+    padding: 2rem 0.8rem;
+  }
+}

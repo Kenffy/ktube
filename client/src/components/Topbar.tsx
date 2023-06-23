@@ -47,7 +47,7 @@ export const Topbar = () => {
 
   const theme = state.theme === "light" ? styles.light : styles.dark;
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${theme}`}>
       <div className={`ctn ${styles.wrapper}`}>
         <div className={styles.large}>
           <div className={`${styles.logo} ${theme}`}>

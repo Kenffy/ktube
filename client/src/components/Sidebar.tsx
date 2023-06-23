@@ -76,10 +76,13 @@ export const Sidebar = ({ active, onClose }: sideProps) => {
               <i className="fa-solid fa-circle-question"></i>
               <span>Help</span>
             </NavLink>
-            <NavLink to="/" onClick={() => dispatch({ type: "TOGGLE_THEME" })}>
+            <div
+              className={styles.toggle}
+              onClick={() => dispatch({ type: "TOGGLE_THEME" })}
+            >
               <i className="fa-solid fa-circle-half-stroke"></i>
               <span>Dark Mode</span>
-            </NavLink>
+            </div>
 
             <hr className={styles.separator} />
 

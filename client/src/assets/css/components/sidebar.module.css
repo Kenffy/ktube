@@ -7,6 +7,7 @@
   overflow: hidden;
   transform: translateX(-100%);
   transition: transform 0.3s ease-in-out;
+  z-index: 200;
 }
 
 .container.active {
@@ -100,12 +101,14 @@
   overflow-y: scroll;
 }
 
-.bottomWrapper a {
+.bottomWrapper a,
+.bottomWrapper .toggle {
   padding: 0.5rem 1rem;
   margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
   border-radius: 0.3rem;
+  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
@@ -131,11 +134,13 @@
   border: 2px solid var(--bg-dark);
 }
 
-.bottomWrapper a:hover {
+.bottomWrapper a:hover,
+.bottomWrapper .toggle:hover {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-.bottomWrapper a i {
+.bottomWrapper a i,
+.bottomWrapper .toggle i {
   margin-right: 1rem;
 }
 
