@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import "../src/assets/css/global.css";
-import { Navbar } from "./components/Navbar";
+//import { Navbar } from "./components/Navbar";
+import { Topbar } from "./components/Topbar";
 
 const Home = lazy(() =>
   import("./pages/Home").then(({ Home }) => ({ default: Home }))
@@ -19,7 +20,8 @@ const Register = lazy(() =>
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
+      <Topbar />
+      {/* <Navbar /> */}
       <Routes>
         <Route
           path="/"

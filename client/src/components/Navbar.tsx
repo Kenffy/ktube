@@ -52,11 +52,9 @@ export const Navbar = () => {
     <div className={styles.container}>
       <div className={`ctn ${styles.wrapper}`}>
         {!onSearch && (
-          <div className={styles.logo}>
+          <div className={`${styles.logo} ${theme}`}>
             <a href="/">
-              <h4>
-                KW<i className="fa-solid fa-video"></i>
-              </h4>
+              <h4>KWatch</h4>
             </a>
           </div>
         )}
