@@ -22,41 +22,43 @@ function App() {
     <BrowserRouter>
       <Topbar />
       {/* <Navbar /> */}
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Suspense fallback={<div>Loading...</div>}>
-              <Home />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/videos/:id"
-          element={
-            <Suspense>
-              <Single />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <Suspense>
-              <Login />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <Suspense>
-              <Register />
-            </Suspense>
-          }
-        />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <div className="ctn">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <Home />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/videos/:id"
+            element={
+              <Suspense>
+                <Single />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <Suspense>
+                <Login />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <Suspense>
+                <Register />
+              </Suspense>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </div>
     </BrowserRouter>
   );
 }
