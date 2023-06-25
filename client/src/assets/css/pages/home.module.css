@@ -12,12 +12,21 @@
 
 .videoWrapper {
   display: grid;
-  gap: 2rem;
+  gap: 1.5rem;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 .shortWrapper {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   overflow-x: scroll;
+  padding: 1rem 0;
+}
+
+@media (max-width: 280px) {
+  .videoWrapper {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
 }
