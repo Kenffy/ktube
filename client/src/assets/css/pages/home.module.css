@@ -1,0 +1,23 @@
+.container {
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper hr {
+  margin: 2rem 0;
+}
+
+.videoWrapper {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.shortWrapper {
+  display: flex;
+  gap: 2rem;
+  overflow-x: scroll;
+}
