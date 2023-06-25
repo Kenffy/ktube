@@ -29,7 +29,7 @@ export const Register = () => {
   return (
     <div className={`${styles.container} ${theme}`}>
       <div className={`${styles.wrapper} ${theme}`}>
-        <h2 className={styles.heading}>Sign In</h2>
+        <h2 className={styles.heading}>Sign Up</h2>
         {errorMessage && (
           <span className={styles.errorMsg}>{errorMessage}</span>
         )}

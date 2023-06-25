@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import styles from "../assets/css/components/sidebar.module.css";
 import { ThemeContext } from "../context/ThemeContext";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 type sideProps = {
   active: boolean;
@@ -10,7 +10,13 @@ type sideProps = {
 
 export const Sidebar = ({ active, onClose }: sideProps) => {
   const { state, dispatch } = useContext(ThemeContext);
+  const navigate = useNavigate();
   const theme = state.theme === "light" ? styles.light : styles.dark;
+
+  const handleLogin = () => {
+    navigate("/login");
+    onClose();
+  };
   return (
     <div className={`${styles.container} ${active && styles.active}`}>
       <div className={styles.wrapper}>
@@ -27,15 +33,15 @@ export const Sidebar = ({ active, onClose }: sideProps) => {
             </div>
           </div>
           <div className={styles.bottomWrapper}>
-            <NavLink to="/">
+            <NavLink to="/" onClick={onClose}>
               <i className="fa-solid fa-house"></i>
               <span>Home</span>
             </NavLink>
-            <NavLink to="/">
+            <NavLink to="/videos/test" onClick={onClose}>
               <i className="fa-solid fa-compass"></i>
               <span>Shorts</span>
             </NavLink>
-            <NavLink to="/">
+            <NavLink to="/" onClick={onClose}>
               <i className="fa-solid fa-users-rectangle"></i>
               <span>Subscriptions</span>
             </NavLink>
@@ -44,35 +50,35 @@ export const Sidebar = ({ active, onClose }: sideProps) => {
 
             <div className={`${styles.auth} ${theme}`}>
               <p>Sign in to like videos, comment and subscribe.</p>
-              <button>Sign In</button>
+              <button onClick={handleLogin}>Sign In</button>
             </div>
 
             <hr className={styles.separator} />
 
-            <NavLink to="/">
+            <NavLink to="/" onClick={onClose}>
               <i className="fa-solid fa-clock-rotate-left"></i>
               <span>History</span>
             </NavLink>
-            <NavLink to="/">
+            <NavLink to="/" onClick={onClose}>
               <i className="fa-solid fa-layer-group"></i>
               <span>Playlists</span>
             </NavLink>
-            <NavLink to="/">
+            <NavLink to="/" onClick={onClose}>
               <i className="fa-solid fa-circle-play"></i>
               <span>My Videos</span>
             </NavLink>
 
             <hr className={styles.separator} />
 
-            <NavLink to="/">
+            <NavLink to="/" onClick={onClose}>
               <i className="fa-solid fa-gear"></i>
               <span>Settings</span>
             </NavLink>
-            <NavLink to="/">
+            <NavLink to="/" onClick={onClose}>
               <i className="fa-solid fa-flag"></i>
               <span>Report</span>
             </NavLink>
-            <NavLink to="/">
+            <NavLink to="/" onClick={onClose}>
               <i className="fa-solid fa-circle-question"></i>
               <span>Help</span>
             </NavLink>
