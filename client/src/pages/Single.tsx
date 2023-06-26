@@ -7,23 +7,22 @@ export const Single = () => {
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <div className={styles.leftWrapper}>
-          {/* <video
-            controls
-            className={styles.player}
-            src="https://www.youtube.com/watch?v=Qu1OBfCRQys"
-          ></video> */}
-          <ReactPlayer
-            className={styles.player}
-            url={`https://www.youtube.com/watch?v=Qu1OBfCRQys`}
-            config={{
-              youtube: {
-                playerVars: { showinfo: 1 },
-              },
-              facebook: {
-                appId: "12345",
-              },
-            }}
-          />
+          <div className={styles.player}>
+            <ReactPlayer
+              height="100%"
+              width="100%"
+              controls
+              url={`https://www.youtube.com/watch?v=TX9qSaGXFyg`}
+              config={{
+                youtube: {
+                  playerVars: { showinfo: 1 },
+                },
+                facebook: {
+                  appId: "12345",
+                },
+              }}
+            />
+          </div>
         </div>
         <div className={styles.rightWrapper}>
           <div className={styles.videoWrapper}>

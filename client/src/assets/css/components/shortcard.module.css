@@ -17,6 +17,11 @@
   object-fit: cover;
 }
 
+.container:hover .cover {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
 .wrapper {
   padding: 0.5rem;
   display: flex;
