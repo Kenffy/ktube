@@ -1,8 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import styles from "../assets/css/components/videocard.module.css";
 
 export const VideoCard = () => {
+  const navigate = useNavigate();
+
+  const handleOnVideo = () => {
+    navigate("/videos/test");
+  };
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={handleOnVideo}>
       <img
         src="https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Zugpsitze_mountain.jpg?crop=0%2C214%2C3008%2C1579&wid=1200&hei=630&scl=2.506666666666667"
         alt=""

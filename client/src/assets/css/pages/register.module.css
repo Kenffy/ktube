@@ -6,11 +6,11 @@
 }
 
 .container.light {
-  background-color: rgba(0, 0, 0, 0.2);
+  /* background-color: rgba(0, 0, 0, 0.2); */
 }
 
 .container.dark {
-  background-color: rgba(0, 0, 0, 0.5);
+  /* background-color: rgba(0, 0, 0, 0.5); */
 }
 
 .wrapper {
@@ -19,6 +19,7 @@
   max-width: 480px;
   padding: 2rem;
   border-radius: 0.5rem;
+  box-shadow: var(--box-shadow);
 }
 
 .wrapper.light {

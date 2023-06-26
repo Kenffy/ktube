@@ -37,11 +37,11 @@ export const Sidebar = ({ active, onClose }: sideProps) => {
               <i className="fa-solid fa-house"></i>
               <span>Home</span>
             </NavLink>
-            <NavLink to="/videos/test" onClick={onClose}>
+            <NavLink to="/shorts" onClick={onClose}>
               <i className="fa-solid fa-compass"></i>
               <span>Shorts</span>
             </NavLink>
-            <NavLink to="/" onClick={onClose}>
+            <NavLink to="/videos/subscriptions" onClick={onClose}>
               <i className="fa-solid fa-users-rectangle"></i>
               <span>Subscriptions</span>
             </NavLink>
@@ -55,30 +55,30 @@ export const Sidebar = ({ active, onClose }: sideProps) => {
 
             <hr className={styles.separator} />
 
-            <NavLink to="/" onClick={onClose}>
+            <NavLink to="/videos/history" onClick={onClose}>
               <i className="fa-solid fa-clock-rotate-left"></i>
               <span>History</span>
             </NavLink>
-            <NavLink to="/" onClick={onClose}>
+            <NavLink to="/video/playlist" onClick={onClose}>
               <i className="fa-solid fa-layer-group"></i>
               <span>Playlists</span>
             </NavLink>
-            <NavLink to="/" onClick={onClose}>
+            <NavLink to="/channel/videos" onClick={onClose}>
               <i className="fa-solid fa-circle-play"></i>
               <span>My Videos</span>
             </NavLink>
 
             <hr className={styles.separator} />
 
-            <NavLink to="/" onClick={onClose}>
+            <NavLink to="/settings" onClick={onClose}>
               <i className="fa-solid fa-gear"></i>
               <span>Settings</span>
             </NavLink>
-            <NavLink to="/" onClick={onClose}>
+            <NavLink to="/reports" onClick={onClose}>
               <i className="fa-solid fa-flag"></i>
               <span>Report</span>
             </NavLink>
-            <NavLink to="/" onClick={onClose}>
+            <NavLink to="/help" onClick={onClose}>
               <i className="fa-solid fa-circle-question"></i>
               <span>Help</span>
             </NavLink>
