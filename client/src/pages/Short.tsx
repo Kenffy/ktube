@@ -60,7 +60,7 @@ export const Short = () => {
                   src="https://leadership.ng/wp-content/uploads/2023/03/davido.png"
                   alt=""
                 />
-                <span>Channel Name</span>
+                <span>Chaîne officielle TVL</span>
               </div>
               <button>Subscribe</button>
             </div>

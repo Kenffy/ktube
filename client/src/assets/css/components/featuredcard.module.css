@@ -1,0 +1,59 @@
+.container {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+.cover {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.brands {
+  position: absolute;
+  bottom: 20%;
+  left: 1rem;
+  z-index: 10;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.2);
+  flex-direction: column;
+  padding: 0.5rem 0.5rem;
+  border-radius: 0.5rem;
+  width: fit-content;
+  color: var(--txt-light);
+}
+
+.brands h2 {
+  font-size: 2rem;
+}
+
+.brands h4 {
+  font-size: 1.2rem;
+  margin-top: 0.8rem;
+}
+
+@media (max-width: 580px) {
+  .container {
+    height: 240px;
+  }
+
+  .brands {
+    left: 0.5rem;
+  }
+
+  .brands h2 {
+    font-size: 1.3rem;
+  }
+
+  .brands h4 {
+    font-size: 1rem;
+    margin-top: 0.8rem;
+  }
+}
+
+@media (max-width: 280px) {
+  .container {
+    height: 180px;
+  }
+}

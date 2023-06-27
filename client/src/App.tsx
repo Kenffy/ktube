@@ -1,6 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import "../src/assets/css/global.css";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 //import { Navbar } from "./components/Navbar";
 import { Topbar } from "./components/Topbar";
 
