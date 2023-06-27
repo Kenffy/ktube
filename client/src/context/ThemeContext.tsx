@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from "react";
 
 const INIT_STATE = {
-  theme: "dark",
+  theme: "light",
 };
 
 type ActionType = {

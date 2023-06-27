@@ -23,16 +23,6 @@ export const Home = () => {
           <VideoCard />
           <VideoCard />
           <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
         </div>
         <hr />
         <div className={styles.shortWrapper}>
@@ -46,29 +36,9 @@ export const Home = () => {
           <ShortCard />
           <ShortCard />
           <ShortCard />
-          <ShortCard />
-          <ShortCard />
-          <ShortCard />
-          <ShortCard />
-          <ShortCard />
-          <ShortCard />
-          <ShortCard />
-          <ShortCard />
-          <ShortCard />
-          <ShortCard />
         </div>
         <hr />
         <div className={styles.videoWrapper}>
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
-          <VideoCard />
           <VideoCard />
           <VideoCard />
           <VideoCard />

@@ -36,7 +36,7 @@ export const Single = () => {
             </div>
             <div className={styles.detailRight}>
               <div className={`${styles.actionItem} ${styles.like}`}>
-                <i className="fa-regular fa-thumbs-up"></i>
+                <i className="fa-regular fa-heart"></i>
                 <span>532</span>
               </div>
               <div className={styles.actionItem}>

@@ -1,8 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import styles from "../assets/css/components/shortcard.module.css";
 
 export const ShortCard = () => {
+  const navigate = useNavigate();
+
+  const handleOnShort = () => {
+    navigate("/shorts/test");
+  };
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={handleOnShort}>
       <img
         src="https://expertphotography.b-cdn.net/wp-content/uploads/2018/07/bubble-photography-6-1-1.jpg"
         alt=""

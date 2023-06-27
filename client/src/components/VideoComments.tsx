@@ -60,7 +60,7 @@ export const VideoComments = () => {
           </div>
           <div className={styles.commentActions}>
             <div className={`${styles.commentActionItem} ${styles.like}`}>
-              <i className="fa-regular fa-thumbs-up"></i>
+              <i className="fa-regular fa-heart"></i>
               <span>25</span>
             </div>
             <div className={styles.commentActionItem}>

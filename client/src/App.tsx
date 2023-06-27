@@ -10,6 +10,9 @@ const Home = lazy(() =>
 const Single = lazy(() =>
   import("./pages/Single").then(({ Single }) => ({ default: Single }))
 );
+const Short = lazy(() =>
+  import("./pages/Short").then(({ Short }) => ({ default: Short }))
+);
 const Login = lazy(() =>
   import("./pages/Login").then(({ Login }) => ({ default: Login }))
 );
@@ -37,6 +40,14 @@ function App() {
             element={
               <Suspense>
                 <Single />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/shorts/:id"
+            element={
+              <Suspense>
+                <Short />
               </Suspense>
             }
           />
