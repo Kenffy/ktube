@@ -4,7 +4,7 @@
 }
 
 .wrapper {
-  margin-top: 2rem;
+  margin-top: 1rem;
   display: flex;
   max-width: 1800px;
   width: 100%;
@@ -14,6 +14,97 @@
 
 .leftWrapper {
   flex: 3;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+.title {
+  margin-top: 1rem;
+}
+
+.detailWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.actionItem {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: rgba(100, 100, 100, 0.2);
+}
+
+.actionItem.like {
+  width: fit-content;
+  padding: 0 0.5rem;
+  border-radius: 25px;
+}
+
+.actionItem.like span {
+  margin-left: 0.5rem;
+  font-size: 14px;
+}
+
+.views {
+  font-size: 14px;
+}
+
+.detailRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.profileWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.profile {
+  height: 35px;
+  width: 35px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.infoWrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0.5rem;
+}
+
+.channelWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.channel {
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.channel:hover {
+  text-decoration: underline;
+}
+
+.connections {
+  font-size: 12px;
+  margin-top: 0.2rem;
 }
 
 .player {
@@ -22,6 +113,46 @@
   border-radius: 0.3rem;
   overflow: hidden;
   object-fit: cover;
+}
+
+.subscribeBtn {
+  padding: 0.3rem 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 0.3rem;
+}
+
+.descWrapper {
+  margin-top: 2rem;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+}
+
+.descWrapper p {
+  --max-lines: 3;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--max-lines);
+}
+
+.descWrapper.full p {
+  display: block;
+  overflow: initial;
+}
+
+.moreComments {
+  font-size: 12px;
+  cursor: pointer;
+  width: fit-content;
+  transition: all 0.2s;
+  margin-top: 1rem;
+}
+
+.moreComments:hover {
+  font-weight: 500;
 }
 
 .rightWrapper {

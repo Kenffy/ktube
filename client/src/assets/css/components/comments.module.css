@@ -1,0 +1,136 @@
+.container {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.inputWrapper {
+  display: flex;
+}
+
+.commentUser {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.inputWrapper textarea {
+  width: 100%;
+  resize: none;
+  height: 60px;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  outline: none;
+  border: none;
+  margin-left: 1rem;
+  font-size: 14px;
+  color: var(--text-light);
+  background-color: rgba(100, 100, 100, 0.2);
+}
+
+.inputActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+  gap: 1rem;
+}
+
+.inputActions button {
+  padding: 0.3rem 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 0.3rem;
+}
+
+.commentList {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.commentItem {
+  margin-bottom: 0rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.commentUserInfos {
+  display: flex;
+  align-items: center;
+}
+
+.commentUserInfos img {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.commentUserInfos span {
+  font-size: 13px;
+  padding: 0 0.5rem;
+}
+
+.commentBody {
+  margin-top: 0.5rem;
+}
+
+.commentBody p {
+  font-size: 14px;
+}
+
+.commentActions {
+  margin-top: 0.5rem;
+  gap: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.commentActionItem {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: rgba(100, 100, 100, 0.2);
+}
+
+.commentActionItem i {
+  font-size: 12px;
+}
+
+.commentActionItem.like {
+  width: fit-content;
+  padding: 0 0.5rem;
+  border-radius: 25px;
+}
+
+.commentActionItem.like span {
+  margin-left: 0.5rem;
+  font-size: 11px;
+}
+
+.moreComments {
+  font-size: 12px;
+  cursor: pointer;
+  width: fit-content;
+  transition: all 0.2s;
+}
+
+.moreComments:hover {
+  font-weight: 500;
+}
