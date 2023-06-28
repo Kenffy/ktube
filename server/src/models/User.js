@@ -20,13 +20,16 @@ const UserSchema = new mongoose.Schema(
       type: String,
     },
     subscribers: {
-      type: [Number],
-      default: 0,
+      type: [String],
     },
     subscriptions: {
       type: [String],
     },
     fromGoogle: {
+      type: Boolean,
+      default: false,
+    },
+    isAdmin: {
       type: Boolean,
       default: false,
     },
