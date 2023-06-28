@@ -1,24 +1,50 @@
 import React, { useContext, useRef, useState } from "react";
 import styles from "../assets/css/pages/login.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
+import { login } from "../services/services";
 
 export const Login = () => {
   const { state } = useContext(ThemeContext);
+  const navigate = useNavigate();
+
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const userRef = useRef<any>(null);
-  const passRef = useRef<any>(null);
+  const userRef = useRef<HTMLInputElement>(null);
+  const passRef = useRef<HTMLInputElement>(null);
 
   const theme = state.theme === "light" ? styles.light : styles.dark;
 
-  const handleSubmit = async (e: any) => {
+  const handleClear = () => {
+    if (passRef.current) {
+      passRef.current.value = "";
+    }
+    if (userRef.current) {
+      userRef.current.value = "";
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const username = userRef?.current?.value;
-    const password = userRef?.current?.value;
+    const username = userRef.current?.value;
+    const password = passRef.current?.value;
+
+    if (!username || !password) {
+      setErrorMessage("Username and password are required.");
+      return;
+    }
 
     try {
-      console.log({ username, password });
+      const res = await login({ username, password });
+      if (res.status === 200) {
+        console.log(res.data);
+        handleClear();
+        navigate("/");
+      } else {
+        setErrorMessage(
+          "Please fill all mandatory fields, verify your email and password and try again."
+        );
+      }
     } catch (error) {
       console.log(error);
       setErrorMessage("Oop! Something went wrong!");
@@ -32,7 +58,7 @@ export const Login = () => {
         {errorMessage && (
           <span className={styles.errorMsg}>{errorMessage}</span>
         )}
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form}>
           <input
             type="text"
             ref={userRef}
@@ -51,7 +77,11 @@ export const Login = () => {
             By logging in you are agreeing to our Terms of Services and Privacy
             Policy.
           </span>
-          <button className={styles.button} type="submit">
+          <button
+            onClick={handleSubmit}
+            className={styles.button}
+            type="submit"
+          >
             Sign In
           </button>
           <div className={styles.action}>
