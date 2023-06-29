@@ -2,10 +2,39 @@ import styles from "../assets/css/pages/single.module.css";
 import { VideoCard } from "../components/VideoCard";
 import ReactPlayer from "react-player";
 import { VideoComments } from "../components/VideoComments";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getVideo } from "../services/services";
 
 export const Single = () => {
+  const route = useParams();
+
+  const [video, setVideo] = useState<any>({});
   const [onMore, setOnMore] = useState<Boolean>(false);
+
+  useEffect(() => {
+    const loadVideo = async () => {
+      try {
+        const res = await getVideo(route.id);
+        if (res.status === 200) {
+          setVideo(res.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (route.id !== "test") {
+      loadVideo();
+    } else {
+      setVideo({
+        title: `Drogues : labos et trafiquants partagent le magot - Politique & Eco
+        n°394 avec Michel Gandilhon`,
+        videoUrl: `https://www.youtube.com/watch?v=TX9qSaGXFyg`,
+      });
+    }
+  }, [route.id]);
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -15,7 +44,7 @@ export const Single = () => {
               height="100%"
               width="100%"
               controls
-              url={`https://www.youtube.com/watch?v=TX9qSaGXFyg`}
+              url={video?.videoUrl}
               config={{
                 youtube: {
                   playerVars: { showinfo: 1 },
@@ -26,10 +55,7 @@ export const Single = () => {
               }}
             />
           </div>
-          <h4 className={styles.title}>
-            Drogues : labos et trafiquants partagent le magot - Politique & Eco
-            n°394 avec Michel Gandilhon
-          </h4>
+          <h4 className={styles.title}>{video?.title}</h4>
           <div className={styles.detailWrapper}>
             <div className={styles.detailLeft}>
               <span className={styles.views}>4325 views • 2 weeks ago</span>

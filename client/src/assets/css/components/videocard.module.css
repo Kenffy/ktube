@@ -13,7 +13,7 @@
 }
 
 .cover {
-  height: 160px;
+  height: 180px;
   width: 100%;
   border-radius: 0.3rem;
   object-fit: cover;
@@ -85,7 +85,7 @@
 
 @media (max-width: 280px) {
   .container {
-    min-width: 200px;
+    /* min-width: 200px; */
     min-height: 230px;
   }
 }

@@ -24,3 +24,21 @@ export const register = (creds: RegisterModel) =>
     email: creds.email,
     password: creds.password,
   });
+
+// videos
+export const createVideo = (video: any, token: string) =>
+  _axiosAuth.post(`/api/videos`, video, {
+    headers: { authorization: "Bearer " + token },
+  });
+export const updateVideo = (video: any, token: string) =>
+  _axiosAuth.put(`/api/videos/${video?._id}`, video, {
+    headers: { authorization: "Bearer " + token },
+  });
+export const deleteVideo = (id: string, token: string) =>
+  _axiosAuth.delete(`/api/videos/${id}`, {
+    headers: { authorization: "Bearer " + token },
+  });
+
+export const getVideos = (url: string) => _axios.get(url);
+export const getVideo = (id: string | undefined) =>
+  _axios.get(`/api/videos/find/${id}`);
