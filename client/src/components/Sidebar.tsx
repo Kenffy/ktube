@@ -41,7 +41,7 @@ export const Sidebar = ({ active, onClose }: sideProps) => {
               <i className="fa-solid fa-compass"></i>
               <span>Shorts</span>
             </NavLink>
-            <NavLink to="/videos/subscriptions" onClick={onClose}>
+            <NavLink to="/videos/subs" onClick={onClose}>
               <i className="fa-solid fa-users-rectangle"></i>
               <span>Subscriptions</span>
             </NavLink>

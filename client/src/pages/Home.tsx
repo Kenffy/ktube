@@ -5,9 +5,14 @@ import { Header } from "../components/Header";
 import { VideoCard } from "../components/VideoCard";
 import { ShortCard } from "../components/ShortCard";
 
-export const Home = () => {
+type homeProps = {
+  type: string;
+};
+export const Home = ({ type }: homeProps) => {
   const { state } = useContext(ThemeContext);
   const theme = state.theme === "light" ? styles.light : styles.dark;
+
+  console.log(type);
   return (
     <div className={`${styles.container} ${theme}`}>
       <div className={styles.wrapper}>

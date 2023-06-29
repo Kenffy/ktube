@@ -1,4 +1,5 @@
 import axios from "axios";
+import { LoginModel, RegisterModel } from "../types/types";
 
 let baseURL: any;
 if (process.env.NODE_ENV === "development") {
@@ -11,13 +12,13 @@ const _axios = axios.create({ baseURL });
 export const _axiosAuth = axios.create({ baseURL });
 
 // auth
-export const login = (creds: any) =>
+export const login = (creds: LoginModel) =>
   _axios.post(`/api/auth/signin`, {
     username: creds.username,
     password: creds.password,
   });
 
-export const register = (creds: any) =>
+export const register = (creds: RegisterModel) =>
   _axios.post(`/api/auth/signup`, {
     username: creds.username,
     email: creds.email,

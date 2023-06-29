@@ -40,7 +40,7 @@ export const Register = () => {
     }
 
     try {
-      const res = await register({ username, email, password });
+      const res = await register({ email, username, password });
       if (res.status === 200) {
         navigate("/login");
         handleClear();

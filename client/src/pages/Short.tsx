@@ -2,7 +2,12 @@ import styles from "../assets/css/pages/short.module.css";
 import { shortVideos } from "../seeds/shortData";
 import { ShortPlayerCrad } from "../components/ShortPlayerCrad";
 
-export const Short = () => {
+type shortProps = {
+  type: string;
+};
+
+export const Short = ({ type }: shortProps) => {
+  console.log(type);
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
