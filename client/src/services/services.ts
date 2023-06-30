@@ -16,13 +16,13 @@ const _axiosAuth = axios.create({ baseURL });
 
 // auth
 export const login = (creds: LoginModel) =>
-  _axios.post(`/auth/signin`, {
+  _axios.post(`/auth/login`, {
     username: creds.username,
     password: creds.password,
   });
 
 export const register = (creds: RegisterModel) =>
-  _axios.post(`/auth/signup`, {
+  _axios.post(`/auth/register`, {
     username: creds.username,
     email: creds.email,
     password: creds.password,
