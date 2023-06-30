@@ -1,14 +1,14 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import userRoutes from "./routes/users.js";
-import videoRoutes from "./routes/videos.js";
-import commentRoutes from "./routes/comments.js";
-import authRoutes from "./routes/auth.js";
 import cookieParser from "cookie-parser";
 import functions from "firebase-functions";
 import cors from "cors";
 
+import userRoutes from "./routes/users.js";
+import videoRoutes from "./routes/videos.js";
+import commentRoutes from "./routes/comments.js";
+import authRoutes from "./routes/auth.js";
 
 const app = express();
 dotenv.config();
@@ -26,7 +26,7 @@ const connect = () => {
 };
 
 //middlewares
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
@@ -46,7 +46,7 @@ app.use((err, req, res, next) => {
 
 app.listen(process.env.SERVER, () => {
   connect();
-  console.log("Server is listening on port: "+process.env.SERVER);
+  console.log("Server is listening on port: " + process.env.SERVER);
 });
 
 export const server = functions.https.onRequest(app);
