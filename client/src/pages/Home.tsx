@@ -24,7 +24,7 @@ export const Home = ({ type }: homeProps) => {
   useEffect(() => {
     const loadVideos = async () => {
       try {
-        const res = await getVideos(`/api/videos/${type}`);
+        const res = await getVideos(type);
         if (res.status === 200) {
           setVideos(res.data);
         }
