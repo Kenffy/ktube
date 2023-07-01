@@ -3,10 +3,13 @@ import styles from "../assets/css/pages/login.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
 import { login } from "../services/services";
+import { useDispatch } from "react-redux";
+import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
 
 export const Login = () => {
   const { state } = useContext(ThemeContext);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [errorMessage, setErrorMessage] = useState<string>("");
   const userRef = useRef<HTMLInputElement>(null);
@@ -25,6 +28,7 @@ export const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    dispatch(loginStart());
 
     const username = userRef.current?.value;
     const password = passRef.current?.value;
@@ -39,15 +43,18 @@ export const Login = () => {
       if (res.status === 200) {
         console.log(res.data);
         handleClear();
+        dispatch(loginSuccess(res.data));
         navigate("/");
       } else {
         setErrorMessage(
           "Please fill all mandatory fields, verify your email and password and try again."
         );
+        dispatch(loginFailure());
       }
     } catch (error) {
       console.log(error);
       setErrorMessage("Oop! Something went wrong!");
+      dispatch(loginFailure());
     }
   };
 

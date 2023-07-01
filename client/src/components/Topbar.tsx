@@ -4,8 +4,11 @@ import { ThemeContext } from "../context/ThemeContext";
 import avatar from "../assets/images/avatar.png";
 import { useNavigate } from "react-router-dom";
 import { Sidebar } from "./Sidebar";
+import { useSelector } from "react-redux";
+import { StateProps } from "../types/types";
 
 export const Topbar = () => {
+  const { currentUser } = useSelector((state: StateProps) => state.user);
   const navigate = useNavigate();
   const { state } = useContext(ThemeContext);
 
@@ -82,7 +85,10 @@ export const Topbar = () => {
               onBlur={() => setOnMenu(false)}
               onClick={() => setOnMenu((prev) => !prev)}
             >
-              <img src={avatar} alt="avatar" />
+              <img
+                src={currentUser?.profile ? currentUser.profile : avatar}
+                alt="avatar"
+              />
               {onMenu && (
                 <div className={`${styles.menu} ${theme}`}>
                   <span onClick={handleLogin}>Login</span>
@@ -121,7 +127,10 @@ export const Topbar = () => {
                   onBlur={() => setOnMenu(false)}
                   onClick={() => setOnMenu((prev) => !prev)}
                 >
-                  <img src={avatar} alt="avatar" />
+                  <img
+                    src={currentUser?.profile ? currentUser.profile : avatar}
+                    alt="avatar"
+                  />
                   {onMenu && (
                     <div className={`${styles.menu} ${theme}`}>
                       <span onClick={handleLogin}>Login</span>

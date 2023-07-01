@@ -9,8 +9,6 @@ if (process.env.NODE_ENV === "development") {
   baseURL = process.env.REACT_APP_API_BASE_URL;
 }
 
-console.log(baseURL);
-
 const _axios = axios.create({ baseURL });
 const _axiosAuth = axios.create({ baseURL });
 
@@ -26,6 +24,18 @@ export const register = (creds: RegisterModel) =>
     username: creds.username,
     email: creds.email,
     password: creds.password,
+  });
+
+export const logout = (refreshToken: string) =>
+  _axios.post(baseURL + "/auth/logout", { token: refreshToken });
+
+export const refreshToken = (token: string) =>
+  _axios.post(baseURL + "/auth/refresh", { token });
+
+// users
+export const getUser = (id: string, token: string) =>
+  _axiosAuth.get(`/users/find/${id}`, {
+    headers: { authorization: "Bearer " + token },
   });
 
 // videos

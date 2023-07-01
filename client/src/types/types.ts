@@ -1,5 +1,7 @@
 // interfaces
 
+import { Reducer } from "@reduxjs/toolkit";
+
 export interface VideoProps {
   id: number;
   title: string;
@@ -17,6 +19,41 @@ export interface RegisterModel {
   password: string;
 }
 
+export interface IAuthUser {
+  id: string;
+  isAdmin: boolean;
+  username: string;
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface IUser {
+  _id: string;
+  username: string;
+  email: string;
+  profile: string;
+  cover: string;
+  subscribers: string[];
+  subscriptions: string[];
+  fromGoogle: boolean;
+  isAdmin: boolean;
+  createdAt: Date;
+}
+
+export interface IVideo {
+  _id: string;
+  title: string;
+  desc: string;
+  views: number;
+  imgUrl: string;
+  videoUrl: string;
+  tags: string[];
+  likes: string[];
+  dislikes: string[];
+  comments: string[];
+  createdAt: Date;
+}
+
 // types
 
 export type ScrollOption = {
@@ -27,4 +64,24 @@ export type ScrollOption = {
 
 export type ShortProps = {
   video: VideoProps;
+};
+
+// user reducer
+export type UserSliceProps = {
+  authUser: IAuthUser | null;
+  currentUser: IUser | null;
+  loading: boolean;
+  error: boolean;
+};
+
+// video reducer
+export type VideoSliceProps = {
+  currentVideo: IVideo | null;
+  loading: boolean;
+  error: boolean;
+};
+
+export type StateProps = {
+  user: UserSliceProps;
+  video: VideoSliceProps;
 };

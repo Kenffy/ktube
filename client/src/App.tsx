@@ -1,11 +1,15 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import "../src/assets/css/global.css";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 //import { Navbar } from "./components/Navbar";
 import { Topbar } from "./components/Topbar";
+import { useDispatch, useSelector } from "react-redux";
+import { StateProps } from "./types/types";
+import { loadUserData } from "./redux/userSlice";
+import { getUser } from "./services/services";
 
 const Home = lazy(() =>
   import("./pages/Home").then(({ Home }) => ({ default: Home }))
@@ -24,6 +28,25 @@ const Register = lazy(() =>
 );
 
 function App() {
+  const { authUser } = useSelector((state: StateProps) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (authUser) {
+        try {
+          const res = await getUser(authUser?.id, authUser?.accessToken);
+          if (res.status === 200) {
+            dispatch(loadUserData(res.data));
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetchUserData();
+  }, [authUser, dispatch]);
+
   return (
     <BrowserRouter>
       <Topbar />
@@ -53,7 +76,7 @@ function App() {
               path="channel/videos"
               element={
                 <Suspense>
-                  <Home type="channel" />
+                  {authUser ? <Home type="channel" /> : <Login />}
                 </Suspense>
               }
             />
@@ -62,7 +85,7 @@ function App() {
               path="subs"
               element={
                 <Suspense>
-                  <Home type="subs" />
+                  {authUser ? <Home type="subs" /> : <Login />}
                 </Suspense>
               }
             />
