@@ -4,13 +4,19 @@ import { ThemeContext } from "../context/ThemeContext";
 import avatar from "../assets/images/avatar.png";
 import { useNavigate } from "react-router-dom";
 import { Sidebar } from "./Sidebar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { StateProps } from "../types/types";
+import { logout } from "../services/services";
+import { userLogout } from "../redux/userSlice";
 
 export const Topbar = () => {
-  const { currentUser } = useSelector((state: StateProps) => state.user);
+  const { currentUser, authUser } = useSelector(
+    (state: StateProps) => state.user
+  );
+
+  const navDispatch = useDispatch();
   const navigate = useNavigate();
-  const { state } = useContext(ThemeContext);
+  const { state, dispatch } = useContext(ThemeContext);
 
   const [search, setSearch] = useState<string>("");
   const [onSide, setOnSide] = useState<boolean>(false);
@@ -28,16 +34,13 @@ export const Topbar = () => {
     navigate("/login");
   };
 
-  const handleRegister = (e: React.MouseEvent<HTMLSpanElement>) => {
+  const handleLogout = async (e: React.MouseEvent<HTMLSpanElement>) => {
     e.stopPropagation();
+    const res = await logout(authUser?.refreshToken);
+    if (res.status === 200) {
+      navDispatch(userLogout());
+    }
     setOnMenu(false);
-    navigate("/register");
-  };
-
-  const handleLogout = (e: React.MouseEvent<HTMLSpanElement>) => {
-    e.stopPropagation();
-    setOnMenu(false);
-    console.log("logout");
   };
 
   const handleToggleSideMenu = () => {
@@ -46,6 +49,12 @@ export const Topbar = () => {
 
   const handleCloseSideMenu = () => {
     setOnSide(false);
+  };
+
+  const handleChannel = (e: React.MouseEvent<HTMLSpanElement>) => {
+    e.stopPropagation();
+    setOnMenu(false);
+    navigate(`/channel/${currentUser?._id}`);
   };
 
   const theme = state.theme === "light" ? styles.light : styles.dark;
@@ -91,9 +100,66 @@ export const Topbar = () => {
               />
               {onMenu && (
                 <div className={`${styles.menu} ${theme}`}>
-                  <span onClick={handleLogin}>Login</span>
-                  <span onClick={handleRegister}>Register</span>
-                  <span onClick={handleLogout}>Logout</span>
+                  {currentUser ? (
+                    <span className={styles.profileWrapper}>
+                      <img
+                        src={
+                          currentUser?.profile ? currentUser.profile : avatar
+                        }
+                        alt=""
+                      />
+                      <div className={styles.menuProfileInfos}>
+                        <span className={styles.menuChannel}>
+                          {currentUser?.username}
+                        </span>
+                        <span
+                          onClick={handleChannel}
+                          className={styles.menuLink}
+                        >
+                          My Channel
+                        </span>
+                      </div>
+                    </span>
+                  ) : (
+                    <>
+                      <p className={styles.menuDesc}>
+                        Sign in to like videos, comment and subscribe.
+                      </p>
+                      <span onClick={handleLogin} className={styles.menuItem}>
+                        <i className="fa-solid fa-right-to-bracket"></i>
+                        <span>Login</span>
+                      </span>
+                    </>
+                  )}
+                  {currentUser && (
+                    <>
+                      <span className={styles.menuItem}>
+                        <i className="fa-solid fa-gear"></i>
+                        <span>Settings</span>
+                      </span>
+                      <span className={styles.menuItem}>
+                        <i className="fa-solid fa-flag"></i>
+                        <span>Report</span>
+                      </span>
+                    </>
+                  )}
+                  <span className={styles.menuItem}>
+                    <i className="fa-solid fa-circle-question"></i>
+                    <span>Help</span>
+                  </span>
+                  <span
+                    onClick={() => dispatch({ type: "TOGGLE_THEME" })}
+                    className={styles.menuItem}
+                  >
+                    <i className="fa-solid fa-circle-half-stroke"></i>
+                    <span>Dark Mode</span>
+                  </span>
+                  {currentUser && (
+                    <span onClick={handleLogout} className={styles.menuItem}>
+                      <i className="fa-solid fa-right-from-bracket"></i>
+                      <span>Logout</span>
+                    </span>
+                  )}
                 </div>
               )}
             </div>
@@ -133,9 +199,74 @@ export const Topbar = () => {
                   />
                   {onMenu && (
                     <div className={`${styles.menu} ${theme}`}>
-                      <span onClick={handleLogin}>Login</span>
-                      <span onClick={handleRegister}>Register</span>
-                      <span onClick={handleLogout}>Logout</span>
+                      {currentUser ? (
+                        <span className={styles.profileWrapper}>
+                          <img
+                            src={
+                              currentUser?.profile
+                                ? currentUser.profile
+                                : avatar
+                            }
+                            alt=""
+                          />
+                          <div className={styles.menuProfileInfos}>
+                            <span className={styles.menuChannel}>
+                              {currentUser?.username}
+                            </span>
+                            <span
+                              onClick={handleChannel}
+                              className={styles.menuLink}
+                            >
+                              My Channel
+                            </span>
+                          </div>
+                        </span>
+                      ) : (
+                        <>
+                          <p className={styles.menuDesc}>
+                            Sign in to like videos, comment and subscribe.
+                          </p>
+                          <span
+                            onClick={handleLogin}
+                            className={styles.menuItem}
+                          >
+                            <i className="fa-solid fa-right-to-bracket"></i>
+                            <span>Login</span>
+                          </span>
+                        </>
+                      )}
+                      {currentUser && (
+                        <>
+                          <span className={styles.menuItem}>
+                            <i className="fa-solid fa-gear"></i>
+                            <span>Settings</span>
+                          </span>
+                          <span className={styles.menuItem}>
+                            <i className="fa-solid fa-flag"></i>
+                            <span>Report</span>
+                          </span>
+                        </>
+                      )}
+                      <span className={styles.menuItem}>
+                        <i className="fa-solid fa-circle-question"></i>
+                        <span>Help</span>
+                      </span>
+                      <span
+                        onClick={() => dispatch({ type: "TOGGLE_THEME" })}
+                        className={styles.menuItem}
+                      >
+                        <i className="fa-solid fa-circle-half-stroke"></i>
+                        <span>Dark Mode</span>
+                      </span>
+                      {currentUser && (
+                        <span
+                          onClick={handleLogout}
+                          className={styles.menuItem}
+                        >
+                          <i className="fa-solid fa-right-from-bracket"></i>
+                          <span>Logout</span>
+                        </span>
+                      )}
                     </div>
                   )}
                 </div>

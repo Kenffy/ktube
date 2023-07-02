@@ -26,7 +26,7 @@ export const register = (creds: RegisterModel) =>
     password: creds.password,
   });
 
-export const logout = (refreshToken: string) =>
+export const logout = (refreshToken: string | undefined) =>
   _axios.post(baseURL + "/auth/logout", { token: refreshToken });
 
 export const refreshToken = (token: string) =>

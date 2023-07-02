@@ -27,7 +27,7 @@ export const userSlice = createSlice({
       state.loading = false;
       state.error = true;
     },
-    logout: (state: UserSliceProps) => {
+    userLogout: (state: UserSliceProps) => {
       state.authUser = null;
       state.currentUser = null;
       state.loading = false;
@@ -55,7 +55,7 @@ export const {
   loginSuccess,
   loadUserData,
   loginFailure,
-  logout,
+  userLogout,
   subscription,
 } = userSlice.actions;
 

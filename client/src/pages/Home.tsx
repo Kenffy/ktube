@@ -47,8 +47,6 @@ export const Home = ({ type }: homeProps) => {
     loadVideos();
   }, [type, dispatch]);
 
-  console.log(videos);
-
   return (
     <div className={`${styles.container} ${theme}`}>
       <div className={styles.wrapper}>

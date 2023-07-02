@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { StateProps } from "./types/types";
 import { loadUserData } from "./redux/userSlice";
 import { getUser } from "./services/services";
-import { UnAuthCard } from "./components/UnAuthCard";
 
 const Home = lazy(() =>
   import("./pages/Home").then(({ Home }) => ({ default: Home }))
@@ -26,6 +25,16 @@ const Login = lazy(() =>
 );
 const Register = lazy(() =>
   import("./pages/Register").then(({ Register }) => ({ default: Register }))
+);
+
+const Channel = lazy(() =>
+  import("./pages/Channel").then(({ Channel }) => ({ default: Channel }))
+);
+
+const UnAuthCard = lazy(() =>
+  import("./components/UnAuthCard").then(({ UnAuthCard }) => ({
+    default: UnAuthCard,
+  }))
 );
 
 function App() {
@@ -78,7 +87,7 @@ function App() {
               element={
                 <Suspense>
                   {authUser ? (
-                    <Home type="channel" />
+                    <Channel />
                   ) : (
                     <UnAuthCard
                       type="My Videos"
@@ -166,6 +175,12 @@ function App() {
                 }
               />
             </Route>
+            <Route
+              path="channel/:id"
+              element={
+                <Suspense>{authUser ? <Channel /> : <Login />}</Suspense>
+              }
+            />
             <Route
               path="login"
               element={
