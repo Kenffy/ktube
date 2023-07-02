@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { VideoSliceProps } from "../types/types";
 
 const initialState: VideoSliceProps = {
+  videos: [],
   currentVideo: null,
   loading: false,
   error: false,
@@ -14,9 +15,23 @@ export const videoSlice = createSlice({
     fetchStart: (state: VideoSliceProps) => {
       state.loading = true;
     },
-    fetchSuccess: (state: VideoSliceProps, action) => {
+    addVideoSuccess: (state: VideoSliceProps, action) => {
       state.loading = false;
       state.currentVideo = action.payload;
+      state.videos.push(action.payload);
+    },
+    removeVideoSuccess: (state: VideoSliceProps, action) => {
+      state.loading = false;
+      state.currentVideo = null;
+      state.videos.filter((item) => item._id !== action.payload._id);
+    },
+    fetchVideoSuccess: (state: VideoSliceProps, action) => {
+      state.loading = false;
+      state.currentVideo = action.payload;
+    },
+    fetchAllVideoSuccess: (state: VideoSliceProps, action) => {
+      state.loading = false;
+      state.videos = action.payload;
     },
     fetchFailure: (state: VideoSliceProps) => {
       state.loading = false;
@@ -51,7 +66,13 @@ export const videoSlice = createSlice({
   },
 });
 
-export const { fetchStart, fetchSuccess, fetchFailure, like, dislike } =
-  videoSlice.actions;
+export const {
+  fetchStart,
+  fetchVideoSuccess,
+  fetchAllVideoSuccess,
+  fetchFailure,
+  like,
+  dislike,
+} = videoSlice.actions;
 
 export default videoSlice.reducer;

@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { StateProps } from "./types/types";
 import { loadUserData } from "./redux/userSlice";
 import { getUser } from "./services/services";
+import { UnAuthCard } from "./components/UnAuthCard";
 
 const Home = lazy(() =>
   import("./pages/Home").then(({ Home }) => ({ default: Home }))
@@ -44,7 +45,7 @@ function App() {
         }
       }
     };
-    fetchUserData();
+    authUser && fetchUserData();
   }, [authUser, dispatch]);
 
   return (
@@ -76,16 +77,14 @@ function App() {
               path="channel/videos"
               element={
                 <Suspense>
-                  {authUser ? <Home type="channel" /> : <Login />}
-                </Suspense>
-              }
-            />
-
-            <Route
-              path="subs"
-              element={
-                <Suspense>
-                  {authUser ? <Home type="subs" /> : <Login />}
+                  {authUser ? (
+                    <Home type="channel" />
+                  ) : (
+                    <UnAuthCard
+                      type="My Videos"
+                      icon="fa-solid fa-circle-play"
+                    />
+                  )}
                 </Suspense>
               }
             />
@@ -98,8 +97,57 @@ function App() {
                     <Single />
                   </Suspense>
                 }
-              ></Route>
+              />
+
+              <Route
+                path="subscriptions"
+                element={
+                  <Suspense>
+                    {authUser ? (
+                      <Home type="subs" />
+                    ) : (
+                      <UnAuthCard
+                        type="Subscriptions"
+                        icon="fa-solid fa-users-rectangle"
+                      />
+                    )}
+                  </Suspense>
+                }
+              />
+
+              <Route
+                path="history"
+                element={
+                  <Suspense>
+                    {authUser ? (
+                      <Home type="history" />
+                    ) : (
+                      <UnAuthCard
+                        type="History"
+                        icon="fa-solid fa-clock-rotate-left"
+                      />
+                    )}
+                  </Suspense>
+                }
+              />
+
+              <Route
+                path="playlist"
+                element={
+                  <Suspense>
+                    {authUser ? (
+                      <Home type="playlist" />
+                    ) : (
+                      <UnAuthCard
+                        type="Playlist"
+                        icon="fa-solid fa-layer-group"
+                      />
+                    )}
+                  </Suspense>
+                }
+              />
             </Route>
+
             <Route path="shorts">
               <Route
                 index

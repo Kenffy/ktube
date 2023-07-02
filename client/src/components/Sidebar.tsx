@@ -41,7 +41,7 @@ export const Sidebar = ({ active, onClose }: sideProps) => {
               <i className="fa-solid fa-compass"></i>
               <span>Shorts</span>
             </NavLink>
-            <NavLink to="/videos/subs" onClick={onClose}>
+            <NavLink to="/videos/subscriptions" onClick={onClose}>
               <i className="fa-solid fa-users-rectangle"></i>
               <span>Subscriptions</span>
             </NavLink>
@@ -59,7 +59,7 @@ export const Sidebar = ({ active, onClose }: sideProps) => {
               <i className="fa-solid fa-clock-rotate-left"></i>
               <span>History</span>
             </NavLink>
-            <NavLink to="/video/playlist" onClick={onClose}>
+            <NavLink to="/videos/playlist" onClick={onClose}>
               <i className="fa-solid fa-layer-group"></i>
               <span>Playlists</span>
             </NavLink>

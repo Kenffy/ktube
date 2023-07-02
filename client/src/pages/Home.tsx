@@ -5,14 +5,22 @@ import { Header } from "../components/Header";
 import { VideoCard } from "../components/VideoCard";
 import { ShortCard } from "../components/ShortCard";
 import { getVideos } from "../services/services";
+import { IVideo } from "../types/types";
+import { useDispatch } from "react-redux";
+import {
+  fetchAllVideoSuccess,
+  fetchFailure,
+  fetchStart,
+} from "../redux/videoSlice";
 
 type homeProps = {
   type: string;
 };
 export const Home = ({ type }: homeProps) => {
+  const dispatch = useDispatch();
   const { state } = useContext(ThemeContext);
   const theme = state.theme === "light" ? styles.light : styles.dark;
-  const [videos, setVideos] = useState<any[]>([]);
+  const [videos, setVideos] = useState<IVideo[]>([]);
 
   let tempVideos = [];
   if (videos.length === 1) {
@@ -23,18 +31,21 @@ export const Home = ({ type }: homeProps) => {
 
   useEffect(() => {
     const loadVideos = async () => {
+      dispatch(fetchStart());
       try {
         const res = await getVideos(type);
         if (res.status === 200) {
           setVideos(res.data);
+          dispatch(fetchAllVideoSuccess(res.data));
         }
       } catch (error) {
         console.log(error);
+        dispatch(fetchFailure());
       }
     };
 
     loadVideos();
-  }, [type]);
+  }, [type, dispatch]);
 
   console.log(videos);
 
