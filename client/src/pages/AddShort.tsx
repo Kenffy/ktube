@@ -1,5 +1,5 @@
-import React from "react";
+import styles from "../assets/css/pages/addshort.module.css";
 
 export const AddShort = () => {
-  return <div>AddShort</div>;
+  return <div className={styles.container}>AddShort</div>;
 };
