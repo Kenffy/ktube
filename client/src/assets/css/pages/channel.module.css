@@ -1,4 +1,94 @@
 .container {
   min-height: 100vh;
-  background-color: greenyellow;
+  position: relative;
+}
+
+.addBtnWrapper {
+  position: fixed;
+  bottom: 2rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.addBtn {
+  height: 50px;
+  width: 50px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--box-shadow);
+}
+
+.addBtn.light {
+  background-color: var(--bg-light);
+  color: var(--txt-dark);
+}
+
+.addBtn.dark {
+  background-color: var(--bg-dark);
+  color: var(--txt-light);
+}
+
+.addBtn i {
+  font-size: 1.3rem;
+  transition: all 0.3s;
+}
+
+.addBtn .active {
+  rotate: 45deg;
+}
+
+.addBtnMenu {
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--box-shadow);
+  border-radius: 0.3rem;
+  position: absolute;
+  bottom: 4rem;
+  right: 0rem;
+  width: 50px;
+  gap: 0.5rem;
+  border-radius: 30px;
+  padding: 0.5rem;
+  transition: transform 0.3s ease-in-out;
+  transform: translateY(200%);
+  z-index: 50;
+}
+
+.addBtnMenu.active {
+  transform: translateY(0);
+}
+
+.addBtnMenu.light {
+  background-color: var(--bg-light);
+  color: var(--txt-dark);
+}
+
+.addBtnMenu.dark {
+  background-color: var(--bg-dark);
+  color: var(--txt-light);
+}
+
+.addBtnMenu i {
+  font-size: 1.3rem;
+}
+
+.addBtnMenu span {
+  display: flex;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.addBtnMenu small {
+  font-size: 11px;
+  font-weight: 500;
 }

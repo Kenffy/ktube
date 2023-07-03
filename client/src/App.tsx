@@ -31,6 +31,14 @@ const Channel = lazy(() =>
   import("./pages/Channel").then(({ Channel }) => ({ default: Channel }))
 );
 
+const AddVideo = lazy(() =>
+  import("./pages/AddVideo").then(({ AddVideo }) => ({ default: AddVideo }))
+);
+
+const AddShort = lazy(() =>
+  import("./pages/AddShort").then(({ AddShort }) => ({ default: AddShort }))
+);
+
 const UnAuthCard = lazy(() =>
   import("./components/UnAuthCard").then(({ UnAuthCard }) => ({
     default: UnAuthCard,
@@ -109,6 +117,13 @@ function App() {
               />
 
               <Route
+                path="create"
+                element={
+                  <Suspense>{authUser ? <AddVideo /> : <Login />}</Suspense>
+                }
+              />
+
+              <Route
                 path="subscriptions"
                 element={
                   <Suspense>
@@ -172,6 +187,12 @@ function App() {
                   <Suspense>
                     <Short type="select" />
                   </Suspense>
+                }
+              />
+              <Route
+                path="create"
+                element={
+                  <Suspense>{authUser ? <AddShort /> : <Login />}</Suspense>
                 }
               />
             </Route>
