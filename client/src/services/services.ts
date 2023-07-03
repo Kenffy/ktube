@@ -1,7 +1,7 @@
 import axios from "axios";
-import { LoginModel, RegisterModel } from "../types/types";
+import { IVideo, LoginModel, RegisterModel } from "../types/types";
 
-let baseURL: any;
+let baseURL: string | undefined;
 
 if (process.env.NODE_ENV === "development") {
   baseURL = process.env.REACT_APP_API_DEV_URL;
@@ -39,11 +39,11 @@ export const getUser = (id: string, token: string) =>
   });
 
 // videos
-export const createVideo = (video: any, token: string) =>
+export const createVideo = (video: IVideo, token: string) =>
   _axiosAuth.post(`/videos`, video, {
     headers: { authorization: "Bearer " + token },
   });
-export const updateVideo = (video: any, token: string) =>
+export const updateVideo = (video: IVideo, token: string) =>
   _axiosAuth.put(`/videos/${video?._id}`, video, {
     headers: { authorization: "Bearer " + token },
   });

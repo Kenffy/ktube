@@ -41,7 +41,6 @@ export const Login = () => {
     try {
       const res = await login({ username, password });
       if (res.status === 200) {
-        console.log(res.data);
         handleClear();
         dispatch(loginSuccess(res.data));
         navigate("/");
