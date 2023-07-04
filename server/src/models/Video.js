@@ -18,6 +18,10 @@ const VideoSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isShort: {
+      type: Boolean,
+      required: false,
+    },
     videoUrl: {
       type: String,
       required: true,
