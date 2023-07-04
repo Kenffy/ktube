@@ -3,6 +3,120 @@
   position: relative;
 }
 
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+}
+
+.banner {
+  width: 100%;
+  height: 300px;
+  border-radius: 0.3rem;
+  overflow: hidden;
+}
+
+.banner img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.userWrapper {
+  margin-top: 1rem;
+  padding: 0 1rem;
+  display: flex;
+}
+
+.userWrapper .profile {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userDesc {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-left: 0.5rem;
+}
+
+.userTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.userTop .channel {
+  font-weight: 500;
+}
+
+.userTop .subscribeBtn {
+  padding: 0.3rem 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 0.3rem;
+}
+
+.userBotton {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.userBotton .alias {
+  font-size: 14px;
+}
+
+.userBotton .subscribers {
+  font-size: 12px;
+  /* margin-top: 0.2rem; */
+}
+
+.tabWrapper {
+  margin-top: 2rem;
+  padding: 0 1rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tabItem {
+  padding: 0.5rem 1.5rem;
+  display: block;
+  cursor: pointer;
+}
+
+.tabItem.active {
+  border-bottom: 1px solid #ccc;
+}
+
+.contentWrapper {
+  margin-top: 2rem;
+}
+
+.videoWrapper {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.playlistWrapper {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.shortWrapper {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
 .addBtnWrapper {
   position: fixed;
   bottom: 2rem;
@@ -91,4 +205,62 @@
 .addBtnMenu small {
   font-size: 11px;
   font-weight: 500;
+}
+
+@media (max-width: 580px) {
+  .banner {
+    height: 150px;
+  }
+
+  .userWrapper {
+    padding: 0 0.5rem;
+  }
+
+  .userWrapper .profile {
+    height: 45px;
+    width: 45px;
+  }
+
+  .tabWrapper {
+    padding: 0;
+  }
+
+  .tabItem {
+    padding: 0.5rem 0.5rem;
+    display: block;
+  }
+
+  .tabItem span {
+    font-size: 14px;
+  }
+
+  .contentWrapper {
+    margin-top: 1rem;
+  }
+
+  .shortWrapper {
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+  }
+}
+
+@media (max-width: 280px) {
+  .banner {
+    height: 120px;
+  }
+
+  .videoWrapper {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  .playlistWrapper {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  .shortWrapper {
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
 }

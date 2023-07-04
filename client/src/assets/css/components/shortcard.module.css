@@ -1,6 +1,6 @@
 .container {
-  min-width: 250px;
-  min-height: 380px;
+  min-width: 180px;
+  min-height: 350px;
   border-radius: 0.3rem;
   overflow: hidden;
   cursor: pointer;
@@ -11,7 +11,7 @@
 }
 
 .cover {
-  height: 350px;
+  height: 280px;
   width: 100%;
   border-radius: 0.3rem;
   object-fit: cover;
@@ -79,7 +79,7 @@
   }
 
   .cover {
-    height: 350px;
+    height: 280px;
     width: 100%;
     object-fit: cover;
   }
