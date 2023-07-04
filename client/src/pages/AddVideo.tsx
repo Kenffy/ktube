@@ -69,6 +69,16 @@ export const AddVideo = ({ updateVideo }: upsertProps) => {
     }
   };
 
+  const handleRemoveCover = () => {
+    cover && setCover(undefined);
+    coverUrl && setCoverUrl("");
+  };
+
+  const handleRemoveVideo = () => {
+    video && setVideo(undefined);
+    youtubeUrl && setYoutubeUrl("");
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -133,7 +143,7 @@ export const AddVideo = ({ updateVideo }: upsertProps) => {
           {(cover || coverUrl) && (
             <div className={styles.mediaCover}>
               <i
-                onClick={() => setCover(undefined)}
+                onClick={handleRemoveCover}
                 className="fa-solid fa-rectangle-xmark"
               ></i>
               <img
@@ -145,7 +155,7 @@ export const AddVideo = ({ updateVideo }: upsertProps) => {
           {(video || youtubeUrl) && (
             <div className={styles.mediaPlayer}>
               <i
-                onClick={() => setVideo(undefined)}
+                onClick={handleRemoveVideo}
                 className="fa-solid fa-rectangle-xmark"
               ></i>
               <ReactPlayer
