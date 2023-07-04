@@ -1,0 +1,27 @@
+.editor_ctn {
+  border-radius: 3px;
+  color: var(--text-light);
+  border: var(--border-light);
+}
+
+.editor_ctn .ql-toolbar.ql-snow {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.editor_ctn .ql-toolbar.ql-snow .ql-formats button {
+  margin: 0;
+}
+
+.editor_ctn .ql-toolbar span {
+  font-size: 12px;
+}
+
+.editor_ctn .ql-container .ql-editor {
+  height: 150px;
+  padding: 10px 10px;
+  font-size: 14px;
+  border: none;
+}

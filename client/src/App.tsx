@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Suspense, lazy, useEffect } from "react";
 import "../src/assets/css/global.css";
+import "../src/assets/css/editor.css";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
