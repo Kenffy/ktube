@@ -22,13 +22,6 @@ export const Home = ({ type }: homeProps) => {
   const theme = state.theme === "light" ? styles.light : styles.dark;
   const [videos, setVideos] = useState<IVideo[]>([]);
 
-  let tempVideos = [];
-  if (videos.length === 1) {
-    for (var i = 0; i < 10; i++) {
-      tempVideos.push(videos[0]);
-    }
-  }
-
   useEffect(() => {
     const loadVideos = async () => {
       dispatch(fetchStart());
@@ -52,8 +45,8 @@ export const Home = ({ type }: homeProps) => {
       <div className={styles.wrapper}>
         <Header />
         <div className={styles.videoWrapper}>
-          {tempVideos.map((video, index) => (
-            <VideoCard key={index} video={video} />
+          {videos.map((video) => (
+            <VideoCard key={video?._id} video={video} />
           ))}
         </div>
         <hr />

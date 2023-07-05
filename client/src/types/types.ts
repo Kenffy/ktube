@@ -47,11 +47,27 @@ export interface IVideo {
   views: number;
   imgUrl: string;
   videoUrl: string;
+  isShort: boolean;
   tags: string[];
   likes: string[];
   dislikes: string[];
   comments: string[];
   createdAt: Date;
+}
+
+export interface VideoModel {
+  _id?: string;
+  title: string;
+  desc: string;
+  views?: number;
+  imgUrl: string;
+  videoUrl: string;
+  isShort: boolean;
+  tags?: string[];
+  likes?: string[];
+  dislikes?: string[];
+  comments?: string[];
+  createdAt?: Date;
 }
 
 // types

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IVideo, LoginModel, RegisterModel } from "../types/types";
+import { LoginModel, RegisterModel, VideoModel } from "../types/types";
 
 let baseURL: string | undefined;
 
@@ -39,11 +39,11 @@ export const getUser = (id: string, token: string) =>
   });
 
 // videos
-export const createVideo = (video: IVideo, token: string) =>
+export const createVideo = (video: VideoModel, token: string | undefined) =>
   _axiosAuth.post(`/videos`, video, {
     headers: { authorization: "Bearer " + token },
   });
-export const updateVideo = (video: IVideo, token: string) =>
+export const updateVideo = (video: VideoModel, token: string) =>
   _axiosAuth.put(`/videos/${video?._id}`, video, {
     headers: { authorization: "Bearer " + token },
   });

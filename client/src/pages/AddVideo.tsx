@@ -4,11 +4,16 @@ import { v4 as uuidv4 } from "uuid";
 import ReactPlayer from "react-player";
 import { Editor } from "../components/Editor";
 import { useNavigate } from "react-router-dom";
-import { IVideo } from "../types/types";
+import { IVideo, StateProps, VideoModel } from "../types/types";
+import { createVideo } from "../services/services";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchVideoSuccess } from "../redux/videoSlice";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../config/firebase";
 
 interface IFile {
   filename: string;
-  file: any;
+  file: File;
   type: string;
 }
 
@@ -17,6 +22,8 @@ type upsertProps = {
 };
 
 export const AddVideo = ({ updateVideo }: upsertProps) => {
+  const { authUser } = useSelector((state: StateProps) => state.user);
+
   const [title, setTitle] = useState<string>(
     updateVideo ? updateVideo?.title : ""
   );
@@ -33,6 +40,7 @@ export const AddVideo = ({ updateVideo }: upsertProps) => {
   const [cover, setCover] = useState<IFile>();
   const [video, setVideo] = useState<IFile>();
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleCoverFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,16 +87,97 @@ export const AddVideo = ({ updateVideo }: upsertProps) => {
     youtubeUrl && setYoutubeUrl("");
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    let tmpCoverUrl = "";
+    let tmpVideoUrl = "";
+    if (cover) {
+      // Compress the image
+      const compressedImage: any = await compressImage(cover.file);
+
+      // Create a new File object with the compressed image data
+      const compressedFile = new File([compressedImage], cover.filename, {
+        type: cover.file.type,
+        lastModified: cover.file.lastModified,
+      });
+      const newFile = {
+        ...cover,
+        file: compressedFile,
+      };
+      const location = `/kwatch/covers/`;
+      tmpCoverUrl = await uploadImage(newFile, location);
+    }
+
+    if (video) {
+      // upload videos
+      const location = `/kwatch/videos/`;
+      tmpVideoUrl = await uploadImage(video, location);
+    }
 
     if (updateVideo) {
       // update
       console.log("Update Video", title, body, youtubeUrl, cover, video);
     } else {
       // create
+      const tmpVideo: VideoModel = {
+        title,
+        desc: body,
+        imgUrl: cover && tmpCoverUrl.length > 0 ? tmpCoverUrl : coverUrl,
+        videoUrl: video && tmpVideoUrl.length > 0 ? tmpVideoUrl : youtubeUrl,
+        isShort: false,
+      };
+
+      const res = await createVideo(tmpVideo, authUser?.accessToken);
+      if (res.status === 200) {
+        console.log(res.data);
+        dispatch(fetchVideoSuccess(res.data));
+        navigate(`/videos/${res.data?._id}`);
+      }
       console.log("Create Video", title, body, youtubeUrl, cover, video);
     }
+  };
+
+  const uploadImage = async (image: IFile, location: string) => {
+    const storageRef = ref(storage, `${location}${image.filename}`);
+    const uploadTask = await uploadBytes(storageRef, image.file);
+    const downloadURL = await getDownloadURL(uploadTask.ref);
+    return downloadURL;
+  };
+
+  const compressImage = (file: File) => {
+    return new Promise((resolve) => {
+      const image = new Image();
+      image.onload = () => {
+        const canvas = document.createElement("canvas");
+        const maxWidth = 250;
+        const maxHeight = 180;
+        let width = image.width;
+        let height = image.height;
+        if (width > height) {
+          if (width > maxWidth) {
+            height *= maxWidth / width;
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width *= maxHeight / height;
+            height = maxHeight;
+          }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d")?.drawImage(image, 0, 0, width, height);
+        canvas.toBlob(
+          (blob) => {
+            resolve(blob);
+          },
+          "image/jpeg",
+          0.9
+        );
+      };
+      image.src = URL.createObjectURL(file);
+    });
   };
 
   return (
