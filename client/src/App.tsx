@@ -186,7 +186,7 @@ function App() {
                 path=":id"
                 element={
                   <Suspense>
-                    <Short type="select" />
+                    <Short type="random" />
                   </Suspense>
                 }
               />

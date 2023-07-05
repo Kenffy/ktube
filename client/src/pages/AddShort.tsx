@@ -3,8 +3,12 @@ import styles from "../assets/css/pages/addshort.module.css";
 import { v4 as uuidv4 } from "uuid";
 import ReactPlayer from "react-player";
 import { useNavigate } from "react-router-dom";
-import { IVideo } from "../types/types";
+import { IVideo, StateProps, VideoModel } from "../types/types";
 import { Editor } from "../components/Editor";
+import { createVideo } from "../services/services";
+import { fetchVideoSuccess } from "../redux/videoSlice";
+import { compressImage, uploadImage } from "../utils/helper";
+import { useDispatch, useSelector } from "react-redux";
 
 interface IFile {
   filename: string;
@@ -17,6 +21,8 @@ type upsertProps = {
 };
 
 export const AddShort = ({ updateVideo }: upsertProps) => {
+  const { authUser } = useSelector((state: StateProps) => state.user);
+
   const [title, setTitle] = useState<string>(
     updateVideo ? updateVideo?.title : ""
   );
@@ -33,6 +39,7 @@ export const AddShort = ({ updateVideo }: upsertProps) => {
   const [cover, setCover] = useState<IFile>();
   const [video, setVideo] = useState<IFile>();
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleCoverFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,14 +90,55 @@ export const AddShort = ({ updateVideo }: upsertProps) => {
     youtubeUrl && setYoutubeUrl("");
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    let tmpCoverUrl = "";
+    let tmpVideoUrl = "";
+    if (cover) {
+      // Compress the image
+      const compressedImage: any = await compressImage(cover.file, {
+        height: 600,
+        width: 250,
+      });
+
+      // Create a new File object with the compressed image data
+      const compressedFile = new File([compressedImage], cover.filename, {
+        type: cover.file.type,
+        lastModified: cover.file.lastModified,
+      });
+      const newFile = {
+        ...cover,
+        file: compressedFile,
+      };
+      const location = `/kwatch/shorts/covers`;
+      tmpCoverUrl = await uploadImage(newFile, location);
+    }
+
+    if (video) {
+      // upload videos
+      const location = `/kwatch/shorts/videos/`;
+      tmpVideoUrl = await uploadImage(video, location);
+    }
 
     if (updateVideo) {
       // update
       console.log("Update Video", title, body, youtubeUrl, cover, video);
     } else {
       // create
+      const tmpVideo: VideoModel = {
+        title,
+        desc: body,
+        imgUrl: cover && tmpCoverUrl.length > 0 ? tmpCoverUrl : coverUrl,
+        videoUrl: video && tmpVideoUrl.length > 0 ? tmpVideoUrl : youtubeUrl,
+        isShort: true,
+      };
+
+      const res = await createVideo(tmpVideo, authUser?.accessToken);
+      if (res.status === 200) {
+        dispatch(fetchVideoSuccess(res.data));
+        navigate(`/shorts/${res.data?._id}`);
+      }
       console.log("Create Video", title, body, youtubeUrl, cover, video);
     }
   };

@@ -48,16 +48,16 @@
 }
 
 .profile {
-  height: 20px;
-  width: 20px;
+  height: 25px;
+  width: 25px;
   object-fit: cover;
   border-radius: 50%;
 }
 
 .channel {
-  font-size: 11px;
+  font-size: 12px;
+  font-weight: 500;
   padding: 0 0.5rem;
-  border-right: 1px solid #eee;
   cursor: pointer;
 }
 
@@ -68,7 +68,8 @@
 .connections {
   font-size: 11px;
   font-weight: 500;
-  padding: 0 0.5rem;
+  padding: 0 0.3rem;
+  border-left: 1px solid #eee;
 }
 
 @media (max-width: 580px) {

@@ -1,10 +1,14 @@
 import { useRef } from "react";
 import styles from "../assets/css/components/shortplayercard.module.css";
 import useElementOnScreen from "../hooks/useElementOnScreen";
-import { ScrollOption, ShortProps } from "../types/types";
+import { ScrollOption } from "../types/types";
 import ReactPlayer from "react-player";
 
-export const ShortPlayerCrad = ({ video }: ShortProps) => {
+type videoProps = {
+  video?: any;
+};
+
+export const ShortPlayerCrad = ({ video }: videoProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<ReactPlayer>(null);
 
@@ -21,7 +25,7 @@ export const ShortPlayerCrad = ({ video }: ShortProps) => {
         height="100%"
         width="100%"
         controls
-        url={video.url}
+        url={video?.videoUrl}
         playing={isVisibile}
         autoPlay={isVisibile}
         ref={playerRef}
@@ -39,14 +43,14 @@ export const ShortPlayerCrad = ({ video }: ShortProps) => {
           <div className={styles.rightIcon}>
             <i className="fa-regular fa-heart"></i>
           </div>
-          <span>278</span>
+          <span>{video?.likes.length}</span>
         </div>
 
         <div className={styles.rightItem}>
           <div className={styles.rightIcon}>
             <i className="fa-solid fa-comment"></i>
           </div>
-          <span>120</span>
+          <span>{video?.comments.length}</span>
         </div>
 
         <div className={styles.rightItem}>
@@ -67,11 +71,9 @@ export const ShortPlayerCrad = ({ video }: ShortProps) => {
         <p className={styles.title}>{video.title}</p>
         <div className={styles.actionWrapper}>
           <div className={styles.userWrapper}>
-            <img
-              src="https://leadership.ng/wp-content/uploads/2023/03/davido.png"
-              alt=""
-            />
-            <span>Chaîne officielle TVL</span>
+            <img src={video.profile} alt={video?.username} />
+            <span>{video?.username}</span>
+            <span className={styles.connections}>{video?.views} views</span>
           </div>
           <button>Subscribe</button>
         </div>

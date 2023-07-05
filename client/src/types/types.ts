@@ -70,6 +70,12 @@ export interface VideoModel {
   createdAt?: Date;
 }
 
+export interface IFile {
+  filename: string;
+  file: File;
+  type: string;
+}
+
 // types
 
 export type ScrollOption = {
@@ -79,7 +85,7 @@ export type ScrollOption = {
 };
 
 export type ShortProps = {
-  video: VideoProps;
+  video: IVideo;
 };
 
 // user reducer

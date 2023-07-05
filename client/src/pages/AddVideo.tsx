@@ -4,18 +4,11 @@ import { v4 as uuidv4 } from "uuid";
 import ReactPlayer from "react-player";
 import { Editor } from "../components/Editor";
 import { useNavigate } from "react-router-dom";
-import { IVideo, StateProps, VideoModel } from "../types/types";
+import { IFile, IVideo, StateProps, VideoModel } from "../types/types";
 import { createVideo } from "../services/services";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVideoSuccess } from "../redux/videoSlice";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from "../config/firebase";
-
-interface IFile {
-  filename: string;
-  file: File;
-  type: string;
-}
+import { compressImage, uploadImage } from "../utils/helper";
 
 type upsertProps = {
   updateVideo?: IVideo;
@@ -94,7 +87,10 @@ export const AddVideo = ({ updateVideo }: upsertProps) => {
     let tmpVideoUrl = "";
     if (cover) {
       // Compress the image
-      const compressedImage: any = await compressImage(cover.file);
+      const compressedImage: any = await compressImage(cover.file, {
+        height: 360,
+        width: 500,
+      });
 
       // Create a new File object with the compressed image data
       const compressedFile = new File([compressedImage], cover.filename, {
@@ -130,54 +126,11 @@ export const AddVideo = ({ updateVideo }: upsertProps) => {
 
       const res = await createVideo(tmpVideo, authUser?.accessToken);
       if (res.status === 200) {
-        console.log(res.data);
         dispatch(fetchVideoSuccess(res.data));
         navigate(`/videos/${res.data?._id}`);
       }
       console.log("Create Video", title, body, youtubeUrl, cover, video);
     }
-  };
-
-  const uploadImage = async (image: IFile, location: string) => {
-    const storageRef = ref(storage, `${location}${image.filename}`);
-    const uploadTask = await uploadBytes(storageRef, image.file);
-    const downloadURL = await getDownloadURL(uploadTask.ref);
-    return downloadURL;
-  };
-
-  const compressImage = (file: File) => {
-    return new Promise((resolve) => {
-      const image = new Image();
-      image.onload = () => {
-        const canvas = document.createElement("canvas");
-        const maxWidth = 250;
-        const maxHeight = 180;
-        let width = image.width;
-        let height = image.height;
-        if (width > height) {
-          if (width > maxWidth) {
-            height *= maxWidth / width;
-            width = maxWidth;
-          }
-        } else {
-          if (height > maxHeight) {
-            width *= maxHeight / height;
-            height = maxHeight;
-          }
-        }
-        canvas.width = width;
-        canvas.height = height;
-        canvas.getContext("2d")?.drawImage(image, 0, 0, width, height);
-        canvas.toBlob(
-          (blob) => {
-            resolve(blob);
-          },
-          "image/jpeg",
-          0.9
-        );
-      };
-      image.src = URL.createObjectURL(file);
-    });
   };
 
   return (
