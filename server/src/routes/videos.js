@@ -6,6 +6,7 @@ import {
   addView,
   getByTag,
   getVideo,
+  getShorts,
   random,
   search,
   sub,
@@ -23,6 +24,7 @@ router.get("/find/:id", getVideo);
 router.put("/view/:id", addView);
 router.get("/trend", trend);
 router.get("/random", random);
+router.get("/shorts/random", getShorts);
 router.get("/sub", verifyToken, sub);
 router.get("/tags", getByTag);
 router.get("/search", search);

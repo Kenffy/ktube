@@ -103,7 +103,35 @@ export const addView = async (req, res, next) => {
 
 export const random = async (req, res, next) => {
   try {
-    const videos = await Video.aggregate([{ $sample: { size: 40 } }]);
+    const videos = await Video.aggregate([
+      { $match: { isShort: false } },
+      { $sample: { size: 40 } },
+    ]);
+    if (videos) {
+      let results = [];
+      for (const video of videos) {
+        const tempUser = await User.findById(
+          video.userId,
+          "username profile"
+        ).exec();
+        const { _id, ...user } = tempUser._doc;
+        results.push({ ...video, ...user });
+      }
+      res.status(200).json(results);
+    } else {
+      res.status(200).json("No comment record found!");
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getShorts = async (req, res, next) => {
+  try {
+    const videos = await Video.aggregate([
+      { $match: { isShort: true } },
+      { $sample: { size: 40 } },
+    ]);
     if (videos) {
       let results = [];
       for (const video of videos) {
