@@ -53,6 +53,6 @@ export const deleteVideo = (id: string, token: string) =>
   });
 
 export const getVideos = (type: string) => _axios.get(`/videos/${type}`);
-export const getShorts = (type: string) => _axios.get(`/videos/shorts/${type}`);
+export const getShorts = () => _axios.get(`/videos/shorts/random`);
 export const getVideo = (id: string | undefined) =>
   _axios.get(`/videos/find/${id}`);

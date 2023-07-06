@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { IVideo } from "../types/types";
 import { useDispatch } from "react-redux";
 import { getShorts } from "../services/services";
+import { useParams } from "react-router-dom";
 
 type shortProps = {
   type: string;
@@ -12,25 +13,29 @@ type shortProps = {
 
 export const Short = ({ type }: shortProps) => {
   const dispatch = useDispatch();
+  const params = useParams();
+
   const [videos, setVideos] = useState<IVideo[]>([]);
+
+  const shortId = params?.id;
 
   useEffect(() => {
     const loadVideos = async () => {
-      //dispatch(fetchStart());
       try {
-        const res = await getShorts(type);
+        const res = await getShorts();
         if (res.status === 200) {
-          setVideos(res.data);
-          //dispatch(fetchAllVideoSuccess(res.data));
+          const tempVideos = res.data.sort((a: any, b: any) => {
+            return a._id === shortId ? -1 : b._id === shortId ? 1 : 0;
+          });
+          setVideos(tempVideos);
         }
       } catch (error) {
         console.log(error);
-        //dispatch(fetchFailure());
       }
     };
 
-    loadVideos();
-  }, [type, dispatch]);
+    shortId && loadVideos();
+  }, [shortId, dispatch]);
 
   return (
     <div className={styles.container}>

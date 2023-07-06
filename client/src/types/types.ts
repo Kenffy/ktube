@@ -99,7 +99,9 @@ export type UserSliceProps = {
 // video reducer
 export type VideoSliceProps = {
   videos: IVideo[];
+  shorts: IVideo[];
   currentVideo: IVideo | null;
+  currentShort: IVideo | null;
   loading: boolean;
   error: boolean;
 };

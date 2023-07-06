@@ -23,6 +23,10 @@
   padding: 1rem 0;
 }
 
+.swiperWrapper {
+  height: 100%;
+}
+
 @media (max-width: 280px) {
   .videoWrapper {
     display: grid;

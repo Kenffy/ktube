@@ -3,7 +3,9 @@ import { VideoSliceProps } from "../types/types";
 
 const initialState: VideoSliceProps = {
   videos: [],
+  shorts: [],
   currentVideo: null,
+  currentShort: null,
   loading: false,
   error: false,
 };
@@ -29,9 +31,17 @@ export const videoSlice = createSlice({
       state.loading = false;
       state.currentVideo = action.payload;
     },
+    fetchShortSuccess: (state: VideoSliceProps, action) => {
+      state.loading = false;
+      state.currentShort = action.payload;
+    },
     fetchAllVideoSuccess: (state: VideoSliceProps, action) => {
       state.loading = false;
       state.videos = action.payload;
+    },
+    fetchAllShortsSuccess: (state: VideoSliceProps, action) => {
+      state.loading = false;
+      state.shorts = action.payload;
     },
     fetchFailure: (state: VideoSliceProps) => {
       state.loading = false;

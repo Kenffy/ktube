@@ -4,14 +4,9 @@ import { ThemeContext } from "../context/ThemeContext";
 import { Header } from "../components/Header";
 import { VideoCard } from "../components/VideoCard";
 import { ShortCard } from "../components/ShortCard";
-import { getVideos } from "../services/services";
+import { getShorts, getVideos } from "../services/services";
 import { IVideo } from "../types/types";
 import { useDispatch } from "react-redux";
-import {
-  fetchAllVideoSuccess,
-  fetchFailure,
-  fetchStart,
-} from "../redux/videoSlice";
 
 type homeProps = {
   type: string;
@@ -21,19 +16,21 @@ export const Home = ({ type }: homeProps) => {
   const { state } = useContext(ThemeContext);
   const theme = state.theme === "light" ? styles.light : styles.dark;
   const [videos, setVideos] = useState<IVideo[]>([]);
+  const [shorts, setShorts] = useState<IVideo[]>([]);
 
   useEffect(() => {
     const loadVideos = async () => {
-      dispatch(fetchStart());
       try {
-        const res = await getVideos(type);
-        if (res.status === 200) {
-          setVideos(res.data);
-          dispatch(fetchAllVideoSuccess(res.data));
+        const videoRes = await getVideos(type);
+        const shortRes = await getShorts();
+        if (videoRes.status === 200) {
+          setVideos(videoRes.data);
+        }
+        if (shortRes.status === 200) {
+          setShorts(shortRes.data);
         }
       } catch (error) {
         console.log(error);
-        dispatch(fetchFailure());
       }
     };
 
@@ -51,16 +48,9 @@ export const Home = ({ type }: homeProps) => {
         </div>
         <hr />
         <div className={styles.shortWrapper}>
-          <ShortCard />
-          <ShortCard />
-          <ShortCard />
-          <ShortCard />
-          <ShortCard />
-          <ShortCard />
-          <ShortCard />
-          <ShortCard />
-          <ShortCard />
-          <ShortCard />
+          {shorts.map((video) => (
+            <ShortCard key={video?._id} video={video} />
+          ))}
         </div>
         <hr />
         <div className={styles.videoWrapper}>

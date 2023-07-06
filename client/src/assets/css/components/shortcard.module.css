@@ -1,5 +1,7 @@
 .container {
-  min-width: 180px;
+  min-width: 200px;
+  max-width: 230px;
+  width: 100%;
   min-height: 350px;
   border-radius: 0.3rem;
   overflow: hidden;
