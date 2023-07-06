@@ -27,14 +27,18 @@ export const Short = ({ type }: shortProps) => {
           const tempVideos = res.data.sort((a: any, b: any) => {
             return a._id === shortId ? -1 : b._id === shortId ? 1 : 0;
           });
-          setVideos(tempVideos);
+          if (shortId) {
+            setVideos(tempVideos);
+          } else {
+            setVideos(res.data);
+          }
         }
       } catch (error) {
         console.log(error);
       }
     };
 
-    shortId && loadVideos();
+    loadVideos();
   }, [shortId, dispatch]);
 
   return (
