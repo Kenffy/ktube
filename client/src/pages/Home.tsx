@@ -7,6 +7,10 @@ import { ShortCard } from "../components/ShortCard";
 import { getShorts, getVideos } from "../services/services";
 import { IVideo } from "../types/types";
 import { useDispatch } from "react-redux";
+import {
+  fetchAllShortsSuccess,
+  fetchAllVideoSuccess,
+} from "../redux/videoSlice";
 
 type homeProps = {
   type: string;
@@ -25,9 +29,11 @@ export const Home = ({ type }: homeProps) => {
         const shortRes = await getShorts();
         if (videoRes.status === 200) {
           setVideos(videoRes.data);
+          dispatch(fetchAllVideoSuccess(videoRes.data));
         }
         if (shortRes.status === 200) {
           setShorts(shortRes.data);
+          dispatch(fetchAllShortsSuccess(shortRes.data));
         }
       } catch (error) {
         console.log(error);

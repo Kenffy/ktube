@@ -131,7 +131,7 @@
   flex-direction: column;
 }
 
-.descWrapper p {
+.descWrapper .description {
   --max-lines: 3;
   display: -webkit-box;
   overflow: hidden;
@@ -139,7 +139,7 @@
   -webkit-line-clamp: var(--max-lines);
 }
 
-.descWrapper.full p {
+.descWrapper.full .description {
   display: block;
   overflow: initial;
 }

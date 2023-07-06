@@ -6,10 +6,14 @@ import { VideoCard } from "../components/VideoCard";
 import { ShortCard } from "../components/ShortCard";
 import { PlaylistCard } from "../components/PlaylistCard";
 import { AddPlayList } from "../components/AddPlayList";
+import { useSelector } from "react-redux";
+import { StateProps } from "../types/types";
 
 export const Channel = () => {
   const { state } = useContext(ThemeContext);
   const navigate = useNavigate();
+
+  const { shorts } = useSelector((state: StateProps) => state.video);
 
   const [onMenu, setOnMenu] = useState<boolean>(false);
   const [onCreateList, setOnCreateList] = useState<boolean>(false);
@@ -96,14 +100,9 @@ export const Channel = () => {
           )}
           {tabIndex === 1 && (
             <div className={styles.shortWrapper}>
-              <ShortCard />
-              <ShortCard />
-              <ShortCard />
-              <ShortCard />
-              <ShortCard />
-              <ShortCard />
-              <ShortCard />
-              <ShortCard />
+              {shorts.map((video) => (
+                <ShortCard key={video?._id} video={video} />
+              ))}
             </div>
           )}
           {tabIndex === 2 && (

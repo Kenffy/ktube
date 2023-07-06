@@ -52,6 +52,8 @@ export interface IVideo {
   likes: string[];
   dislikes: string[];
   comments: string[];
+  subscribers?: string[];
+  subscriptions?: string[];
   createdAt: Date;
 }
 

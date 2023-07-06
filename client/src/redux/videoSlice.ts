@@ -80,6 +80,7 @@ export const {
   fetchStart,
   fetchVideoSuccess,
   fetchAllVideoSuccess,
+  fetchAllShortsSuccess,
   fetchFailure,
   like,
   dislike,
