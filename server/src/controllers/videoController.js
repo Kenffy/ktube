@@ -15,6 +15,7 @@ export const addVideo = async (req, res, next) => {
     const user = {
       username: tempUser.username,
       profile: tempUser.profile,
+      subscribers: tempUser.subscribers,
     };
 
     res.status(200).json({ ...savedVideo._doc, ...user });
@@ -38,7 +39,7 @@ export const updateVideo = async (req, res, next) => {
 
       const tempUser = await User.findById(
         video.userId,
-        "username profile"
+        "username profile subscribers"
       ).exec();
       const { _id, ...user } = tempUser._doc;
       res.status(200).json({ ...updatedVideo._doc, ...user });
@@ -81,7 +82,7 @@ export const getVideo = async (req, res, next) => {
 
     const tempUser = await User.findById(
       video.userId,
-      "username profile"
+      "username profile subscribers"
     ).exec();
     const { _id, ...user } = tempUser._doc;
     res.status(200).json({ ...video._doc, ...user });
@@ -112,7 +113,7 @@ export const random = async (req, res, next) => {
       for (const video of videos) {
         const tempUser = await User.findById(
           video.userId,
-          "username profile"
+          "username profile subscribers"
         ).exec();
         const { _id, ...user } = tempUser._doc;
         results.push({ ...video, ...user });
@@ -137,7 +138,7 @@ export const getShorts = async (req, res, next) => {
       for (const video of videos) {
         const tempUser = await User.findById(
           video.userId,
-          "username profile"
+          "username profile subscribers"
         ).exec();
         const { _id, ...user } = tempUser._doc;
         results.push({ ...video, ...user });
@@ -159,7 +160,7 @@ export const trend = async (req, res, next) => {
       for (const video of videos) {
         const tempUser = await User.findById(
           video.userId,
-          "username profile"
+          "username profile subscribers"
         ).exec();
         const { _id, ...user } = tempUser._doc;
         results.push({ ...video, ...user });
@@ -183,7 +184,7 @@ export const sub = async (req, res, next) => {
         let results = [];
         const tempUser = await User.findById(
           channelId,
-          "username profile"
+          "username profile subscribers"
         ).exec();
         const { _id, ...friend } = tempUser._doc;
         const videos = await Video.find({ userId: channelId });
@@ -209,7 +210,7 @@ export const getByTag = async (req, res, next) => {
       for (const video of videos) {
         const tempUser = await User.findById(
           video.userId,
-          "username profile"
+          "username profile subscribers"
         ).exec();
         const { _id, ...user } = tempUser._doc;
         results.push({ ...video, ...user });
@@ -234,7 +235,7 @@ export const search = async (req, res, next) => {
       for (const video of videos) {
         const tempUser = await User.findById(
           video.userId,
-          "username profile"
+          "username profile subscribers"
         ).exec();
         const { _id, ...user } = tempUser._doc;
         results.push({ ...video, ...user });
