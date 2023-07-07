@@ -108,6 +108,33 @@ export const random = async (req, res, next) => {
       { $match: { isShort: false } },
       { $sample: { size: 40 } },
     ]);
+
+    const shorts = await Video.aggregate([
+      { $match: { isShort: true } },
+      { $sample: { size: 40 } },
+    ]);
+
+    let l_videos = await fetchAllUserInfos(videos);
+    let l_shorts = await fetchAllUserInfos(shorts);
+
+    if ((l_videos && l_shorts) || l_shorts || l_videos) {
+      res
+        .status(200)
+        .json({
+          videos: l_videos ? l_videos : "No record found.",
+          shorts: l_shorts ? l_shorts : "No record found.",
+        });
+    } else {
+      res.status(200).json("No comment record found!");
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getUserVideos = async (req, res, next) => {
+  try {
+    const videos = await Video.find({ isShort: false, userId: req.params.id });
     if (videos) {
       let results = [];
       for (const video of videos) {
@@ -116,7 +143,7 @@ export const random = async (req, res, next) => {
           "username profile subscribers"
         ).exec();
         const { _id, ...user } = tempUser._doc;
-        results.push({ ...video, ...user });
+        results.push({ ...video?._doc, ...user });
       }
       res.status(200).json(results);
     } else {
@@ -142,6 +169,28 @@ export const getShorts = async (req, res, next) => {
         ).exec();
         const { _id, ...user } = tempUser._doc;
         results.push({ ...video, ...user });
+      }
+      res.status(200).json(results);
+    } else {
+      res.status(200).json("No comment record found!");
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getUserShorts = async (req, res, next) => {
+  try {
+    const videos = await Video.find({ isShort: true, userId: req.params.id });
+    if (videos) {
+      let results = [];
+      for (const video of videos) {
+        const tempUser = await User.findById(
+          video.userId,
+          "username profile subscribers"
+        ).exec();
+        const { _id, ...user } = tempUser._doc;
+        results.push({ ...video?._doc, ...user });
       }
       res.status(200).json(results);
     } else {
@@ -246,5 +295,34 @@ export const search = async (req, res, next) => {
     }
   } catch (err) {
     next(err);
+  }
+};
+
+const fetchUserInfos = async (video) => {
+  let result;
+  if (!video) return result;
+
+  const tempUser = await User.findById(
+    video.userId,
+    "username profile subscribers"
+  ).exec();
+  const { _id, ...user } = tempUser._doc;
+  result = { ...video, ...user };
+};
+
+const fetchAllUserInfos = async (videos) => {
+  let results = [];
+  if (videos.length === 0) return results;
+
+  if (videos.length > 0) {
+    for (const video of videos) {
+      const tempUser = await User.findById(
+        video.userId,
+        "username profile subscribers"
+      ).exec();
+      const { _id, ...user } = tempUser._doc;
+      results.push({ ...video, ...user });
+    }
+    return results;
   }
 };

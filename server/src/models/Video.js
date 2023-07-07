@@ -14,6 +14,14 @@ const VideoSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    category: {
+      type: String,
+    },
+    isPrivate: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     imgUrl: {
       type: String,
       required: true,
