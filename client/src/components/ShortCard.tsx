@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styles from "../assets/css/components/shortcard.module.css";
+import avatar from "../assets/images/avatar.png";
 
 type videoProps = {
   video?: any;
@@ -19,7 +20,7 @@ export const ShortCard = ({ video }: videoProps) => {
         <h5 className={styles.title}>{video?.title}</h5>
         <div className={styles.actions}>
           <img
-            src={video?.profile}
+            src={video?.profile || avatar}
             alt={video?.username}
             className={styles.profile}
           />

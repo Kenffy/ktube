@@ -1,29 +1,52 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "../assets/css/pages/channel.module.css";
 import { ThemeContext } from "../context/ThemeContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { VideoCard } from "../components/VideoCard";
 import { ShortCard } from "../components/ShortCard";
 import { PlaylistCard } from "../components/PlaylistCard";
 import { AddPlayList } from "../components/AddPlayList";
 import { useSelector } from "react-redux";
-import { StateProps } from "../types/types";
+import { IVideo, StateProps } from "../types/types";
+import { getShortsByUserId, getVideosByUserId } from "../services/services";
+import avatar from "../assets/images/avatar.png";
 
 export const Channel = () => {
   const { state } = useContext(ThemeContext);
   const navigate = useNavigate();
+  const params = useParams();
+  const channelId = params?.id;
 
-  const { shorts } = useSelector((state: StateProps) => state.video);
+  const { currentUser } = useSelector((state: StateProps) => state.user);
 
   const [onMenu, setOnMenu] = useState<boolean>(false);
   const [onCreateList, setOnCreateList] = useState<boolean>(false);
   const [tabIndex, setTabIndex] = useState<number>(0);
-  const [isOwner, setIsOwner] = useState(false);
-
-  const profileUrl =
-    "https://firebasestorage.googleapis.com/v0/b/kenffy-blog.appspot.com/o/images%2Fusers%2FWUMkcZvtLdP17odhWejXsN2Pg5a2%2Fprofile%2F4e66a164-f2f4-45d7-92c0-c9cd20a3ea17kenffy.jpeg?alt=media&token=a711b3b9-4dc6-410d-bbe9-9ad5a6b54c96";
+  const [isOwner, setIsOwner] = useState(
+    channelId === currentUser?._id ? true : false
+  );
+  const [videos, setVideos] = useState<IVideo[]>([]);
+  const [shorts, setShorts] = useState<IVideo[]>([]);
 
   const bannerUrl = "https://www.vyasgroup.com/images/business/sci-com.jpg";
+
+  useEffect(() => {
+    const loadVideos = async () => {
+      try {
+        const videoRes = await getVideosByUserId(channelId);
+        const shortRes = await getShortsByUserId(channelId);
+        if (videoRes.status === 200) {
+          setVideos(videoRes.data);
+        }
+        if (shortRes.status === 200) {
+          setShorts(shortRes.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    channelId && loadVideos();
+  }, [channelId]);
 
   const handleAddVideo = (e: React.MouseEvent<HTMLSpanElement>) => {
     e.stopPropagation();
@@ -46,10 +69,14 @@ export const Channel = () => {
           <img src={bannerUrl} alt="" />
         </div>
         <div className={styles.userWrapper}>
-          <img src={profileUrl} alt="" className={styles.profile} />
+          <img
+            src={currentUser?.profile || avatar}
+            alt={currentUser?.username}
+            className={styles.profile}
+          />
           <div className={styles.userDesc}>
             <div className={styles.userTop}>
-              <span className={styles.channel}>Channel Name</span>
+              <span className={styles.channel}>{currentUser?.username}</span>
               <button
                 onClick={() => setIsOwner((prev) => !prev)}
                 className={styles.subscribeBtn}
@@ -59,7 +86,9 @@ export const Channel = () => {
             </div>
             <div className={styles.userBotton}>
               {/* <span className={styles.alias}>@ChannelName</span> */}
-              <span className={styles.subscribers}>180 Subscribers</span>
+              <span
+                className={styles.subscribers}
+              >{`${currentUser?.subscribers.length} subscribers`}</span>
             </div>
           </div>
         </div>
@@ -87,23 +116,34 @@ export const Channel = () => {
 
         <div className={styles.contentWrapper}>
           {tabIndex === 0 && (
-            <div className={styles.videoWrapper}>
-              <VideoCard />
-              <VideoCard />
-              <VideoCard />
-              <VideoCard />
-              <VideoCard />
-              <VideoCard />
-              <VideoCard />
-              <VideoCard />
-            </div>
+            <>
+              {videos.length > 0 ? (
+                <div className={styles.videoWrapper}>
+                  {videos.map((video) => (
+                    <VideoCard key={video?._id} video={video} />
+                  ))}
+                </div>
+              ) : (
+                <div className={styles.notifyWrapper}>
+                  <span>Sorry! No videos found.</span>
+                </div>
+              )}
+            </>
           )}
           {tabIndex === 1 && (
-            <div className={styles.shortWrapper}>
-              {shorts.map((video) => (
-                <ShortCard key={video?._id} video={video} />
-              ))}
-            </div>
+            <>
+              {shorts.length > 0 ? (
+                <div className={styles.shortWrapper}>
+                  {shorts.map((video) => (
+                    <ShortCard key={video?._id} video={video} />
+                  ))}
+                </div>
+              ) : (
+                <div className={styles.notifyWrapper}>
+                  <span>Sorry! No shorts found.</span>
+                </div>
+              )}
+            </>
           )}
           {tabIndex === 2 && (
             <div className={styles.playlistWrapper}>

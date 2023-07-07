@@ -92,7 +92,7 @@ function App() {
             />
 
             <Route
-              path="channel/videos"
+              path="channel/videos/:id"
               element={
                 <Suspense>
                   {authUser ? (

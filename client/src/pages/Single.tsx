@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { StateProps } from "../types/types";
 import { format } from "timeago.js";
 import parse from "html-react-parser";
+import avatar from "../assets/images/avatar.png";
 
 export const Single = () => {
   const route = useParams();
@@ -90,7 +91,7 @@ export const Single = () => {
           <div className={styles.actions}>
             <div className={styles.profileWrapper}>
               <img
-                src={video?.profile}
+                src={video?.profile || avatar}
                 alt={video?.username}
                 className={styles.profile}
               />

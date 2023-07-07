@@ -3,6 +3,7 @@ import styles from "../assets/css/components/shortplayercard.module.css";
 import useElementOnScreen from "../hooks/useElementOnScreen";
 import { ScrollOption } from "../types/types";
 import ReactPlayer from "react-player";
+import avatar from "../assets/images/avatar.png";
 
 type videoProps = {
   video?: any;
@@ -71,7 +72,7 @@ export const ShortPlayerCrad = ({ video }: videoProps) => {
         <p className={styles.title}>{video.title}</p>
         <div className={styles.actionWrapper}>
           <div className={styles.userWrapper}>
-            <img src={video.profile} alt={video?.username} />
+            <img src={video.profile || avatar} alt={video?.username} />
             <span>{video?.username}</span>
             <span className={styles.connections}>{video?.views} views</span>
           </div>

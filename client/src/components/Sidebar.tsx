@@ -2,6 +2,8 @@ import { useContext } from "react";
 import styles from "../assets/css/components/sidebar.module.css";
 import { ThemeContext } from "../context/ThemeContext";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { StateProps } from "../types/types";
 
 type sideProps = {
   active: boolean;
@@ -12,6 +14,8 @@ export const Sidebar = ({ active, onClose }: sideProps) => {
   const { state, dispatch } = useContext(ThemeContext);
   const navigate = useNavigate();
   const theme = state.theme === "light" ? styles.light : styles.dark;
+
+  const { authUser } = useSelector((state: StateProps) => state.user);
 
   const handleLogin = () => {
     navigate("/login");
@@ -63,7 +67,7 @@ export const Sidebar = ({ active, onClose }: sideProps) => {
               <i className="fa-solid fa-layer-group"></i>
               <span>Playlists</span>
             </NavLink>
-            <NavLink to="/channel/videos" onClick={onClose}>
+            <NavLink to={`/channel/videos/${authUser?.id}`} onClick={onClose}>
               <i className="fa-solid fa-circle-play"></i>
               <span>My Videos</span>
             </NavLink>

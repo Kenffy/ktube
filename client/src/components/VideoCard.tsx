@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styles from "../assets/css/components/videocard.module.css";
 import { format } from "timeago.js";
+import avatar from "../assets/images/avatar.png";
 
 type videoProps = {
   video?: any;
@@ -29,11 +30,7 @@ export const VideoCard = ({ video }: videoProps) => {
         <h5 className={styles.title}>{title}</h5>
         <div className={styles.actions}>
           <img
-            src={
-              video
-                ? video.profile
-                : "https://leadership.ng/wp-content/uploads/2023/03/davido.png"
-            }
+            src={video?.profile || avatar}
             alt=""
             className={styles.profile}
           />

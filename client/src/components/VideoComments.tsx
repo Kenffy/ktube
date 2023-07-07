@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import styles from "../assets/css/components/comments.module.css";
+import avatar from "../assets/images/avatar.png";
 
 export const VideoComments = () => {
   const commentRef = useRef<HTMLTextAreaElement>(null);
@@ -23,11 +24,7 @@ export const VideoComments = () => {
       <span>3 Comments</span>
       <form className={styles.formWrapper}>
         <div className={styles.inputWrapper}>
-          <img
-            src="https://leadership.ng/wp-content/uploads/2023/03/davido.png"
-            alt=""
-            className={styles.commentUser}
-          />
+          <img src={avatar} alt="" className={styles.commentUser} />
           <textarea
             required
             ref={commentRef}
@@ -45,10 +42,7 @@ export const VideoComments = () => {
       <div className={styles.commentList}>
         <div className={styles.commentItem}>
           <div className={styles.commentUserInfos}>
-            <img
-              src="https://leadership.ng/wp-content/uploads/2023/03/davido.png"
-              alt=""
-            />
+            <img src={avatar} alt="" />
             <span>Chaîne officielle TVL • 3 days ago</span>
           </div>
           <div className={styles.commentBody}>
@@ -74,10 +68,7 @@ export const VideoComments = () => {
 
         <div className={styles.commentItem}>
           <div className={styles.commentUserInfos}>
-            <img
-              src="https://leadership.ng/wp-content/uploads/2023/03/davido.png"
-              alt=""
-            />
+            <img src={avatar} alt="" />
             <span>Chaîne officielle TVL • 3 days ago</span>
           </div>
           <div className={styles.commentBody}>
@@ -103,10 +94,7 @@ export const VideoComments = () => {
 
         <div className={styles.commentItem}>
           <div className={styles.commentUserInfos}>
-            <img
-              src="https://leadership.ng/wp-content/uploads/2023/03/davido.png"
-              alt=""
-            />
+            <img src={avatar} alt="" />
             <span>Chaîne officielle TVL • 3 days ago</span>
           </div>
           <div className={styles.commentBody}>

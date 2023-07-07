@@ -33,6 +33,7 @@
   height: 50px;
   width: 50px;
   border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
   object-fit: cover;
 }
 
@@ -50,7 +51,7 @@
 }
 
 .userTop .channel {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .userTop .subscribeBtn {
@@ -72,8 +73,8 @@
 }
 
 .userBotton .subscribers {
-  font-size: 12px;
-  /* margin-top: 0.2rem; */
+  font-size: 13px;
+  padding: 0.2rem 0;
 }
 
 .tabWrapper {
@@ -96,25 +97,38 @@
 }
 
 .contentWrapper {
-  margin-top: 2rem;
+  margin-top: 1rem;
+}
+
+.notifyWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30vh;
 }
 
 .videoWrapper {
   display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  padding: 1rem 0;
+  margin: 0 0rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
 .playlistWrapper {
   display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  padding: 1rem 0;
+  margin: 0 0rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
 .shortWrapper {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  padding: 1rem 0;
+  margin: 0 0rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 
 .addBtnWrapper {

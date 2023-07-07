@@ -139,7 +139,6 @@ export const AddShort = ({ updateVideo }: upsertProps) => {
         dispatch(fetchVideoSuccess(res.data));
         navigate(`/shorts/${res.data?._id}`);
       }
-      console.log("Create Video", title, body, youtubeUrl, cover, video);
     }
   };
 

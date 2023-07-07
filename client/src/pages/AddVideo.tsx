@@ -129,7 +129,6 @@ export const AddVideo = ({ updateVideo }: upsertProps) => {
         dispatch(fetchVideoSuccess(res.data));
         navigate(`/videos/${res.data?._id}`);
       }
-      console.log("Create Video", title, body, youtubeUrl, cover, video);
     }
   };
 
