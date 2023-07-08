@@ -11,6 +11,8 @@ import {
   fetchAllShortsSuccess,
   fetchAllVideoSuccess,
 } from "../redux/videoSlice";
+import { VideoSKCard } from "../components/VideoSKCard";
+import { ShortSKCard } from "../components/ShortSKCard";
 
 type homeProps = {
   type: string;
@@ -48,27 +50,65 @@ export const Home = ({ type }: homeProps) => {
     <div className={`${styles.container} ${theme}`}>
       <div className={styles.wrapper}>
         <Header />
-        {videos?.length > 0 && (
+        {videos?.length > 0 ? (
           <div className={styles.videoWrapper}>
             {videos.map((video) => (
               <VideoCard key={video?._id} video={video} />
             ))}
           </div>
+        ) : (
+          <div className={styles.videoWrapper}>
+            <VideoSKCard />
+            <VideoSKCard />
+            <VideoSKCard />
+            <VideoSKCard />
+            <VideoSKCard />
+            <VideoSKCard />
+            <VideoSKCard />
+            <VideoSKCard />
+            <VideoSKCard />
+            <VideoSKCard />
+          </div>
         )}
+
         <hr />
-        {shorts?.length > 0 && (
+        {shorts?.length > 0 ? (
           <div className={styles.shortWrapper}>
             {shorts.map((video) => (
               <ShortCard key={video?._id} video={video} />
             ))}
           </div>
+        ) : (
+          <div className={styles.shortWrapper}>
+            <ShortSKCard />
+            <ShortSKCard />
+            <ShortSKCard />
+            <ShortSKCard />
+            <ShortSKCard />
+            <ShortSKCard />
+            <ShortSKCard />
+            <ShortSKCard />
+          </div>
         )}
         <hr />
-        {videos?.length > 0 && (
+        {videos?.length > 0 ? (
           <div className={styles.videoWrapper}>
             {videos.map((video) => (
               <VideoCard key={video?._id} video={video} />
             ))}
+          </div>
+        ) : (
+          <div className={styles.videoWrapper}>
+            <VideoSKCard />
+            <VideoSKCard />
+            <VideoSKCard />
+            <VideoSKCard />
+            <VideoSKCard />
+            <VideoSKCard />
+            <VideoSKCard />
+            <VideoSKCard />
+            <VideoSKCard />
+            <VideoSKCard />
           </div>
         )}
       </div>

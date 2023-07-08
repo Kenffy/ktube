@@ -132,6 +132,7 @@
 }
 
 .descWrapper .description {
+  font-size: 13px;
   --max-lines: 3;
   display: -webkit-box;
   overflow: hidden;
