@@ -1,6 +1,8 @@
 import React, { createContext, useReducer, useEffect } from "react";
 
-const localTheme = JSON.parse(localStorage.getItem("theme") || "");
+const localTheme = JSON.parse(
+  localStorage.getItem("theme") || '{"theme":"light"}'
+);
 const INIT_STATE = {
   theme: localTheme || "light",
 };

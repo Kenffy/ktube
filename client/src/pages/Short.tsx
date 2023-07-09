@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { IVideo } from "../types/types";
 import { useDispatch } from "react-redux";
 import { getShorts } from "../services/services";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 type shortProps = {
   type: string;
@@ -14,6 +14,7 @@ type shortProps = {
 export const Short = ({ type }: shortProps) => {
   const dispatch = useDispatch();
   const params = useParams();
+  const navigate = useNavigate();
 
   const [videos, setVideos] = useState<IVideo[]>([]);
 
@@ -43,6 +44,9 @@ export const Short = ({ type }: shortProps) => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.backBtn} onClick={() => navigate(-1)}>
+        <i className="fa-solid fa-arrow-left"></i>
+      </div>
       <div className={styles.wrapper}>
         {videos.map((shVideo) => (
           <ShortPlayerCrad key={shVideo._id} video={shVideo} />
