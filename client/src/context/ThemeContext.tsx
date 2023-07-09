@@ -1,7 +1,8 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 
+const localTheme = JSON.parse(localStorage.getItem("theme") || "");
 const INIT_STATE = {
-  theme: "light",
+  theme: localTheme || "light",
 };
 
 type ActionType = {
@@ -34,6 +35,10 @@ const reducer = (state: StateType, action: ActionType) => {
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
+
+  useEffect(() => {
+    localStorage.setItem("theme", JSON.stringify(state.theme));
+  }, [state.theme]);
 
   return (
     <ThemeContext.Provider value={{ state, dispatch }}>

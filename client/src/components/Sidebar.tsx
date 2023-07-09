@@ -50,12 +50,16 @@ export const Sidebar = ({ active, onClose }: sideProps) => {
               <span>Subscriptions</span>
             </NavLink>
 
-            <hr className={styles.separator} />
+            {!authUser && (
+              <>
+                <hr className={styles.separator} />
 
-            <div className={`${styles.auth} ${theme}`}>
-              <p>Sign in to like videos, comment and subscribe.</p>
-              <button onClick={handleLogin}>Sign In</button>
-            </div>
+                <div className={`${styles.auth} ${theme}`}>
+                  <p>Sign in to like videos, comment and subscribe.</p>
+                  <button onClick={handleLogin}>Sign In</button>
+                </div>
+              </>
+            )}
 
             <hr className={styles.separator} />
 

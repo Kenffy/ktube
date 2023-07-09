@@ -207,7 +207,7 @@ function App() {
               path="login"
               element={
                 <Suspense>
-                  <Login />
+                  {!authUser ? <Login /> : <Home type="random" />}
                 </Suspense>
               }
             />
@@ -215,7 +215,7 @@ function App() {
               path="register"
               element={
                 <Suspense>
-                  <Register />
+                  {!authUser ? <Register /> : <Home type="random" />}
                 </Suspense>
               }
             />
