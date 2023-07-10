@@ -1,10 +1,9 @@
 .playerWrapper {
   min-height: 100%;
-  /* border-radius: 0.5rem; */
   overflow: hidden;
   position: relative;
-  padding-top: 0.5625;
-  /* box-shadow: var(--box-shadow); */
+  margin: 0 0.5rem;
+  border-radius: 0.5rem;
   flex: 1;
   scroll-snap-align: start;
 }

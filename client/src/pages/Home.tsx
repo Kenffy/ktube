@@ -25,11 +25,11 @@ export const Home = ({ type }: homeProps) => {
   const [shorts, setShorts] = useState<IVideo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  let l_videosFirst = videos.slice(0, 9);
-  let l_videosSecond = videos.slice(10, 19);
+  let l_videosFirst = videos.slice(0, 10);
+  let l_videosSecond = videos.slice(11, 20);
   let l_videosThird = videos.slice(20, videos?.length);
-  let l_shortsFirst = shorts.slice(0, 9);
-  let l_shortsSecond = shorts.slice(10, 19);
+  let l_shortsFirst = shorts.slice(0, 10);
+  let l_shortsSecond = shorts.slice(11, 20);
 
   const nvideoSk = 10;
   const nshortSk = 10;
