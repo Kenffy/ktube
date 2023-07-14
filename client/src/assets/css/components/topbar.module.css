@@ -11,10 +11,12 @@
 
 .container.light {
   background-color: var(--bg-light);
+  color: var(--txt-dark);
 }
 
 .container.dark {
   background-color: var(--bg-dark);
+  color: var(--txt-light);
 }
 
 .wrapper {

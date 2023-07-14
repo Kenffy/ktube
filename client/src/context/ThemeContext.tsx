@@ -1,11 +1,13 @@
 import React, { createContext, useReducer, useEffect } from "react";
 
-const localTheme = JSON.parse(
-  localStorage.getItem("theme") || '{"theme":"light"}'
-);
+const theme = localStorage.getItem("theme");
+const localTheme = theme ? JSON.parse(theme) : "light";
+
 const INIT_STATE = {
   theme: localTheme || "light",
 };
+
+console.log(localStorage.getItem("theme"));
 
 type ActionType = {
   type: "TOGGLE_THEME";
