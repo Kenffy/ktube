@@ -5,30 +5,36 @@ import ReactPlayer from "react-player";
 import { Editor } from "../components/Editor";
 import { useNavigate } from "react-router-dom";
 import { IFile, IVideo, StateProps, VideoModel } from "../types/types";
-import { createVideo } from "../services/services";
+import { createVideo, updateVideo } from "../services/services";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVideoSuccess } from "../redux/videoSlice";
 import { compressImage, uploadImage } from "../utils/helper";
 
 type upsertProps = {
-  updateVideo?: IVideo;
+  upsertVideo?: IVideo;
+  setOnEdit?: React.Dispatch<React.SetStateAction<Boolean>>;
+  setUpdatedVideo?: React.Dispatch<React.SetStateAction<any>>;
 };
 
-export const AddVideo = ({ updateVideo }: upsertProps) => {
+export const AddVideo = ({
+  upsertVideo,
+  setUpdatedVideo,
+  setOnEdit,
+}: upsertProps) => {
   const { authUser } = useSelector((state: StateProps) => state.user);
 
   const [title, setTitle] = useState<string>(
-    updateVideo ? updateVideo?.title : ""
+    upsertVideo ? upsertVideo?.title : ""
   );
   const [coverUrl, setCoverUrl] = useState<string>(
-    updateVideo ? updateVideo?.imgUrl : ""
+    upsertVideo ? upsertVideo?.imgUrl : ""
   );
   const [body, setBody] = useState<string>(
-    updateVideo ? updateVideo?.desc : ""
+    upsertVideo ? upsertVideo?.desc : ""
   );
   const [youtube, setYoutube] = useState<boolean>(true);
   const [youtubeUrl, setYoutubeUrl] = useState<string>(
-    updateVideo ? updateVideo?.videoUrl : ""
+    upsertVideo ? upsertVideo?.videoUrl : ""
   );
   const [cover, setCover] = useState<IFile>();
   const [video, setVideo] = useState<IFile>();
@@ -111,9 +117,22 @@ export const AddVideo = ({ updateVideo }: upsertProps) => {
       tmpVideoUrl = await uploadImage(video, location);
     }
 
-    if (updateVideo) {
+    if (upsertVideo) {
+      const tmpVideo: VideoModel = {
+        ...upsertVideo,
+        title,
+        desc: body,
+        imgUrl: cover && tmpCoverUrl.length > 0 ? tmpCoverUrl : coverUrl,
+        videoUrl: video && tmpVideoUrl.length > 0 ? tmpVideoUrl : youtubeUrl,
+      };
       // update
-      console.log("Update Video", title, body, youtubeUrl, cover, video);
+      const res = await updateVideo(tmpVideo, authUser?.accessToken);
+      if (res.status === 200) {
+        dispatch(fetchVideoSuccess(res.data));
+        //navigate(`/videos/${res.data?._id}`);
+        setUpdatedVideo && setUpdatedVideo(res.data);
+        setOnEdit && setOnEdit(false);
+      }
     } else {
       // create
       const tmpVideo: VideoModel = {
@@ -136,11 +155,18 @@ export const AddVideo = ({ updateVideo }: upsertProps) => {
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <div className={styles.headingWrapper}>
-          <div className={styles.backBtn} onClick={() => navigate(-1)}>
+          <div
+            className={styles.backBtn}
+            onClick={
+              upsertVideo
+                ? () => setOnEdit && setOnEdit(false)
+                : () => navigate(-1)
+            }
+          >
             <i className="fa-solid fa-arrow-left"></i>
           </div>
           <span className={styles.heading}>
-            {updateVideo ? "Update Video" : "Upload new video"}
+            {upsertVideo ? "Update Video" : "Upload new video"}
           </span>
         </div>
         <div className={styles.mediaWrapper}>
@@ -240,7 +266,7 @@ export const AddVideo = ({ updateVideo }: upsertProps) => {
               placeholder="Enter your text here."
               onChange={(e) => setBody(e.target.value)}
             ></textarea> */}
-            <button type="submit">{updateVideo ? "Save" : "Upload"}</button>
+            <button type="submit">{upsertVideo ? "Save" : "Upload"}</button>
           </form>
         </div>
       </div>

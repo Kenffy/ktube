@@ -8,7 +8,11 @@ import { PlaylistCard } from "../components/PlaylistCard";
 import { AddPlayList } from "../components/AddPlayList";
 import { useSelector } from "react-redux";
 import { IVideo, StateProps } from "../types/types";
-import { getShortsByUserId, getVideosByUserId } from "../services/services";
+import {
+  getShortsByUserId,
+  getUser,
+  getVideosByUserId,
+} from "../services/services";
 import avatar from "../assets/images/avatar.png";
 
 export const Channel = () => {
@@ -20,6 +24,7 @@ export const Channel = () => {
   const { currentUser } = useSelector((state: StateProps) => state.user);
 
   const [onMenu, setOnMenu] = useState<boolean>(false);
+  const [channel, setChannel] = useState<any>({});
   const [onCreateList, setOnCreateList] = useState<boolean>(false);
   const [tabIndex, setTabIndex] = useState<number>(0);
   const [isOwner, setIsOwner] = useState(
@@ -35,6 +40,13 @@ export const Channel = () => {
       try {
         const videoRes = await getVideosByUserId(channelId);
         const shortRes = await getShortsByUserId(channelId);
+        const usrRes = await getUser(channelId);
+        if (channelId && usrRes.status === 200) {
+          setChannel(
+            channelId !== currentUser?._id ? usrRes.data : currentUser
+          );
+        }
+
         if (videoRes.status === 200) {
           setVideos(videoRes.data);
         }
@@ -46,7 +58,7 @@ export const Channel = () => {
       }
     };
     channelId && loadVideos();
-  }, [channelId]);
+  }, [channelId, currentUser]);
 
   const handleAddVideo = (e: React.MouseEvent<HTMLSpanElement>) => {
     e.stopPropagation();
@@ -70,13 +82,13 @@ export const Channel = () => {
         </div>
         <div className={styles.userWrapper}>
           <img
-            src={currentUser?.profile || avatar}
-            alt={currentUser?.username}
+            src={channel?.profile || avatar}
+            alt={channel?.username}
             className={styles.profile}
           />
           <div className={styles.userDesc}>
             <div className={styles.userTop}>
-              <span className={styles.channel}>{currentUser?.username}</span>
+              <span className={styles.channel}>{channel?.username}</span>
               <button
                 onClick={() => setIsOwner((prev) => !prev)}
                 className={styles.subscribeBtn}
@@ -88,7 +100,7 @@ export const Channel = () => {
               {/* <span className={styles.alias}>@ChannelName</span> */}
               <span
                 className={styles.subscribers}
-              >{`${currentUser?.subscribers.length} subscribers`}</span>
+              >{`${channel?.subscribers?.length} subscribers`}</span>
             </div>
           </div>
         </div>
@@ -117,9 +129,9 @@ export const Channel = () => {
         <div className={styles.contentWrapper}>
           {tabIndex === 0 && (
             <>
-              {videos.length > 0 ? (
+              {videos?.length > 0 ? (
                 <div className={styles.videoWrapper}>
-                  {videos.map((video) => (
+                  {videos?.map((video) => (
                     <VideoCard key={video?._id} video={video} />
                   ))}
                 </div>
@@ -132,9 +144,9 @@ export const Channel = () => {
           )}
           {tabIndex === 1 && (
             <>
-              {shorts.length > 0 ? (
+              {shorts?.length > 0 ? (
                 <div className={styles.shortWrapper}>
-                  {shorts.map((video) => (
+                  {shorts?.map((video) => (
                     <ShortCard key={video?._id} video={video} />
                   ))}
                 </div>

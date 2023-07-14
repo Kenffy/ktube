@@ -19,8 +19,34 @@
   margin-bottom: 2rem;
 }
 
+.titleWrapper {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .title {
-  margin-top: 1rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.titleActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.titleActionItem {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  background-color: rgba(100, 100, 100, 0.2);
 }
 
 .detailWrapper {
@@ -126,18 +152,31 @@
 
 .descWrapper {
   margin-top: 2rem;
-  font-size: 13px;
+  font-size: 14px !important;
   display: flex;
   flex-direction: column;
 }
 
 .descWrapper .description {
-  font-size: 13px;
+  font-size: inherit;
   --max-lines: 3;
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: var(--max-lines);
+}
+
+.descWrapper .description p,
+.descWrapper .description a {
+  font-size: inherit;
+}
+
+.descWrapper .description a {
+  color: #06c;
+}
+
+.descWrapper .description a:hover {
+  text-decoration: underline;
 }
 
 .descWrapper.full .description {

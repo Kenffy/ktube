@@ -54,7 +54,7 @@ function App() {
     const fetchUserData = async () => {
       if (authUser) {
         try {
-          const res = await getUser(authUser?.id, authUser?.accessToken);
+          const res = await getUser(authUser?.id);
           if (res.status === 200) {
             dispatch(loadUserData(res.data));
           }

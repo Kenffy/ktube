@@ -33,17 +33,15 @@ export const refreshToken = (token: string) =>
   _axios.post(baseURL + "/auth/refresh", { token });
 
 // users
-export const getUser = (id: string, token: string) =>
-  _axiosAuth.get(`/users/find/${id}`, {
-    headers: { authorization: "Bearer " + token },
-  });
+export const getUser = (id: string | undefined) =>
+  _axiosAuth.get(`/users/find/${id}`);
 
 // videos
 export const createVideo = (video: VideoModel, token: string | undefined) =>
   _axiosAuth.post(`/videos`, video, {
     headers: { authorization: "Bearer " + token },
   });
-export const updateVideo = (video: VideoModel, token: string) =>
+export const updateVideo = (video: VideoModel, token: string | undefined) =>
   _axiosAuth.put(`/videos/${video?._id}`, video, {
     headers: { authorization: "Bearer " + token },
   });

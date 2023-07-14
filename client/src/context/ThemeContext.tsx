@@ -7,8 +7,6 @@ const INIT_STATE = {
   theme: localTheme || "light",
 };
 
-console.log(localStorage.getItem("theme"));
-
 type ActionType = {
   type: "TOGGLE_THEME";
 };
