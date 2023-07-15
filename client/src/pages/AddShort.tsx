@@ -5,9 +5,13 @@ import ReactPlayer from "react-player";
 import { useNavigate } from "react-router-dom";
 import { IVideo, StateProps, VideoModel } from "../types/types";
 import { Editor } from "../components/Editor";
-import { createVideo } from "../services/services";
+import { createVideo, updateVideo } from "../services/services";
 import { fetchVideoSuccess } from "../redux/videoSlice";
-import { compressImage, uploadImage } from "../utils/helper";
+import {
+  compressImage,
+  getLocalYoutubeShortUrl,
+  uploadImage,
+} from "../utils/helper";
 import { useDispatch, useSelector } from "react-redux";
 
 interface IFile {
@@ -17,24 +21,24 @@ interface IFile {
 }
 
 type upsertProps = {
-  updateVideo?: IVideo;
+  upsertVideo?: IVideo;
 };
 
-export const AddShort = ({ updateVideo }: upsertProps) => {
+export const AddShort = ({ upsertVideo }: upsertProps) => {
   const { authUser } = useSelector((state: StateProps) => state.user);
 
   const [title, setTitle] = useState<string>(
-    updateVideo ? updateVideo?.title : ""
+    upsertVideo ? upsertVideo?.title : ""
   );
   const [coverUrl, setCoverUrl] = useState<string>(
-    updateVideo ? updateVideo?.imgUrl : ""
+    upsertVideo ? upsertVideo?.imgUrl : ""
   );
   const [body, setBody] = useState<string>(
-    updateVideo ? updateVideo?.desc : ""
+    upsertVideo ? upsertVideo?.desc : ""
   );
   const [youtube, setYoutube] = useState<boolean>(true);
   const [youtubeUrl, setYoutubeUrl] = useState<string>(
-    updateVideo ? updateVideo?.videoUrl : ""
+    upsertVideo ? upsertVideo?.videoUrl : ""
   );
   const [cover, setCover] = useState<IFile>();
   const [video, setVideo] = useState<IFile>();
@@ -121,16 +125,36 @@ export const AddShort = ({ updateVideo }: upsertProps) => {
       tmpVideoUrl = await uploadImage(video, location);
     }
 
-    if (updateVideo) {
+    if (upsertVideo) {
       // update
-      console.log("Update Video", title, body, youtubeUrl, cover, video);
+      const tmpVideo: VideoModel = {
+        ...upsertVideo,
+        title,
+        desc: body,
+        imgUrl: cover && tmpCoverUrl.length > 0 ? tmpCoverUrl : coverUrl,
+        videoUrl:
+          video && tmpVideoUrl.length > 0
+            ? tmpVideoUrl
+            : getLocalYoutubeShortUrl(youtubeUrl),
+        isShort: true,
+      };
+      const res = await updateVideo(tmpVideo, authUser?.accessToken);
+      if (res.status === 200) {
+        dispatch(fetchVideoSuccess(res.data));
+        //navigate(`/videos/${res.data?._id}`);
+        //setUpdatedVideo && setUpdatedVideo(res.data);
+        //setOnEdit && setOnEdit(false);
+      }
     } else {
       // create
       const tmpVideo: VideoModel = {
         title,
         desc: body,
         imgUrl: cover && tmpCoverUrl.length > 0 ? tmpCoverUrl : coverUrl,
-        videoUrl: video && tmpVideoUrl.length > 0 ? tmpVideoUrl : youtubeUrl,
+        videoUrl:
+          video && tmpVideoUrl.length > 0
+            ? tmpVideoUrl
+            : getLocalYoutubeShortUrl(youtubeUrl),
         isShort: true,
       };
 
@@ -150,7 +174,7 @@ export const AddShort = ({ updateVideo }: upsertProps) => {
             <i className="fa-solid fa-arrow-left"></i>
           </div>
           <span className={styles.heading}>
-            {updateVideo ? "Update Short" : "Upload Short"}
+            {upsertVideo ? "Update Short" : "Upload Short"}
           </span>
         </div>
         <div className={styles.mediaWrapper}>
@@ -214,7 +238,11 @@ export const AddShort = ({ updateVideo }: upsertProps) => {
                   height="100%"
                   width="100%"
                   controls
-                  url={video ? URL.createObjectURL(video?.file) : youtubeUrl}
+                  url={
+                    video
+                      ? URL.createObjectURL(video?.file)
+                      : getLocalYoutubeShortUrl(youtubeUrl)
+                  }
                   config={{
                     youtube: {
                       playerVars: { showinfo: 1 },
@@ -252,7 +280,7 @@ export const AddShort = ({ updateVideo }: upsertProps) => {
               placeholder="Enter your text here."
               onChange={(e) => setBody(e.target.value)}
             ></textarea> */}
-            <button type="submit">{updateVideo ? "Save" : "Upload"}</button>
+            <button type="submit">{upsertVideo ? "Save" : "Upload"}</button>
           </form>
         </div>
       </div>

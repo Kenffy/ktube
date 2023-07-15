@@ -46,3 +46,32 @@ export const compressImage = (
     image.src = URL.createObjectURL(file);
   });
 };
+
+export const getYouTubeVideoId = (url: string) => {
+  const regex = // eslint-disable-next-line
+    /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+  const match = url.match(regex);
+  return match && match[1];
+};
+
+export const getLocalYoutubeVideoUrl = (url: string) => {
+  const regex = // eslint-disable-next-line
+    /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+  const match = url.match(regex);
+  if (match) {
+    return "https://www.youtube-nocookie.com/embed/" + match[1];
+  } else {
+    return url;
+  }
+};
+
+export const getLocalYoutubeShortUrl = (url: string) => {
+  const regex = // eslint-disable-next-line
+    /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+  const match = url.match(regex);
+  if (match) {
+    return "https://www.youtube-nocookie.com/shorts/" + match[1];
+  } else {
+    return url;
+  }
+};

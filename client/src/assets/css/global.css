@@ -19,6 +19,11 @@
   font-size: 1.02rem;
 }
 
+* {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 *::-webkit-scrollbar {
   height: 0.5rem;
   width: 0rem;

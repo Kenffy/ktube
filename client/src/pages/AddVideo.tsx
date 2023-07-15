@@ -8,7 +8,11 @@ import { IFile, IVideo, StateProps, VideoModel } from "../types/types";
 import { createVideo, updateVideo } from "../services/services";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVideoSuccess } from "../redux/videoSlice";
-import { compressImage, uploadImage } from "../utils/helper";
+import {
+  compressImage,
+  getLocalYoutubeVideoUrl,
+  uploadImage,
+} from "../utils/helper";
 
 type upsertProps = {
   upsertVideo?: IVideo;
@@ -123,7 +127,10 @@ export const AddVideo = ({
         title,
         desc: body,
         imgUrl: cover && tmpCoverUrl.length > 0 ? tmpCoverUrl : coverUrl,
-        videoUrl: video && tmpVideoUrl.length > 0 ? tmpVideoUrl : youtubeUrl,
+        videoUrl:
+          video && tmpVideoUrl.length > 0
+            ? tmpVideoUrl
+            : getLocalYoutubeVideoUrl(youtubeUrl),
       };
       // update
       const res = await updateVideo(tmpVideo, authUser?.accessToken);
@@ -139,7 +146,10 @@ export const AddVideo = ({
         title,
         desc: body,
         imgUrl: cover && tmpCoverUrl.length > 0 ? tmpCoverUrl : coverUrl,
-        videoUrl: video && tmpVideoUrl.length > 0 ? tmpVideoUrl : youtubeUrl,
+        videoUrl:
+          video && tmpVideoUrl.length > 0
+            ? tmpVideoUrl
+            : getLocalYoutubeVideoUrl(youtubeUrl),
         isShort: false,
       };
 
@@ -229,7 +239,11 @@ export const AddVideo = ({
                 height="100%"
                 width="100%"
                 controls
-                url={video ? URL.createObjectURL(video?.file) : youtubeUrl}
+                url={
+                  video
+                    ? URL.createObjectURL(video?.file)
+                    : getLocalYoutubeVideoUrl(youtubeUrl)
+                }
                 config={{
                   youtube: {
                     playerVars: { showinfo: 1 },

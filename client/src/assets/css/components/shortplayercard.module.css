@@ -1,10 +1,9 @@
-.playerWrapper {
+.playerWrapper,
+.playerWrapper video {
   min-height: 100%;
   overflow: hidden;
   position: relative;
-  margin: 0 0.5rem;
   border-radius: 0.5rem;
-  flex: 1;
   scroll-snap-align: start;
 }
 
@@ -12,6 +11,9 @@
   position: absolute;
   top: 0;
   left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
 }
 
 .rightWrapper {
@@ -53,9 +55,11 @@
   bottom: 0;
   left: 0;
   color: var(--txt-light);
-  padding: 0.8rem 0.5rem;
+  padding: 0rem 0.8rem;
+  padding-bottom: 2rem;
+  padding-top: 0.5rem;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .title {
@@ -100,4 +104,11 @@
   border-radius: 0.2rem;
   border: none;
   cursor: pointer;
+}
+
+@media (max-width: 580px) {
+  .playerWrapper {
+    margin: 0;
+    border-radius: 0;
+  }
 }

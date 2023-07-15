@@ -1,7 +1,5 @@
 // interfaces
 
-import { Reducer } from "@reduxjs/toolkit";
-
 export interface VideoProps {
   id: number;
   title: string;
