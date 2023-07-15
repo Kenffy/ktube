@@ -22,18 +22,17 @@
 .titleWrapper {
   margin: 1rem 0;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  position: relative;
 }
 
 .title {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 500;
 }
 
 .titleActions {
   display: flex;
-  align-items: center;
   justify-content: flex-end;
 }
 
@@ -255,6 +254,16 @@
 
   .player {
     height: 370px;
+  }
+
+  .titleActions {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .titleActionItem {
+    backdrop-filter: blur(2px);
   }
 
   .rightWrapper {
