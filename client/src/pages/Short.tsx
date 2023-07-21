@@ -1,5 +1,4 @@
 import styles from "../assets/css/pages/short.module.css";
-//import { shortVideos } from "../seeds/shortData";
 import { ShortPlayerCrad } from "../components/ShortPlayerCrad";
 import { useEffect } from "react";
 import { StateProps } from "../types/types";
@@ -24,15 +23,12 @@ export const Short = ({ type }: shortProps) => {
   const { shorts } = useSelector((state: StateProps) => state.video);
   const shortId = params?.id;
 
-  console.log(type, shorts);
-
   useEffect(() => {
     const loadVideo = async () => {
       dispatch(fetchStart());
       try {
         const res = await getVideo(shortId);
         if (res.status === 200) {
-          console.log(res.data);
           dispatch(fetchShortSuccess(res.data));
         }
       } catch (error) {
