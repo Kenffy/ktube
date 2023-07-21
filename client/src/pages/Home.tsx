@@ -15,6 +15,7 @@ type homeProps = {
 };
 export const Home = ({ type }: homeProps) => {
   const { state } = useContext(ThemeContext);
+  const { authUser } = useSelector((state: StateProps) => state.user);
   const { shorts, videos } = useSelector((state: StateProps) => state.video);
   const theme = state.theme === "light" ? styles.light : styles.dark;
 
@@ -27,7 +28,10 @@ export const Home = ({ type }: homeProps) => {
     const loadVideos = async () => {
       setIsLoading(true);
       try {
-        const res = await getVideos(type === "random" ? "" : type);
+        const res = await getVideos(
+          type === "random" ? "" : type,
+          authUser?.accessToken
+        );
         if (res.status === 200) {
           setVideoData(res.data);
           setIsLoading(false);
@@ -39,18 +43,22 @@ export const Home = ({ type }: homeProps) => {
     };
 
     type && loadVideos();
-  }, [type]);
+  }, [type, authUser?.accessToken]);
 
   return (
     <div className={`${styles.container} ${theme}`}>
       <div className={styles.wrapper}>
         <Header />
-        {!isLoading && videos?.length > 0 ? (
-          <div className={styles.videoWrapper}>
-            {videos.map((video) => (
-              <VideoCard key={video?._id} video={video} />
-            ))}
-          </div>
+        {!isLoading ? (
+          <>
+            {videos?.length > 0 && (
+              <div className={styles.videoWrapper}>
+                {videos.map((video) => (
+                  <VideoCard key={video?._id} video={video} />
+                ))}
+              </div>
+            )}
+          </>
         ) : (
           <div className={styles.videoWrapper}>
             {[...Array(nSkeleton)].map((item, index) => (
@@ -59,9 +67,9 @@ export const Home = ({ type }: homeProps) => {
           </div>
         )}
 
-        {!isLoading && shorts?.length > 0 ? (
+        {!isLoading ? (
           <>
-            {shorts.length > 0 && (
+            {shorts?.length > 0 && (
               <>
                 <hr />
                 <div className={styles.shortWrapper}>
@@ -83,9 +91,9 @@ export const Home = ({ type }: homeProps) => {
           </>
         )}
 
-        {!isLoading && videoData?.length > 0 ? (
+        {!isLoading ? (
           <>
-            {videoData.length > 0 && (
+            {videoData?.length > 0 && (
               <>
                 <hr />
                 <div className={styles.videoWrapper}>

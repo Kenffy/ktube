@@ -140,7 +140,7 @@ function App() {
                 element={
                   <Suspense>
                     {authUser ? (
-                      <Home type="subs" />
+                      <Home type="sub" />
                     ) : (
                       <UnAuthCard
                         type="Subscriptions"

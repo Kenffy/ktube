@@ -50,7 +50,10 @@ export const deleteVideo = (id: string, token: string) =>
     headers: { authorization: "Bearer " + token },
   });
 
-export const getVideos = (type: string) => _axios.get(`/videos/${type}`);
+export const getVideos = (type: string, token: string | undefined) =>
+  _axios.get(`/videos/${type}`, {
+    headers: { authorization: "Bearer " + token },
+  });
 export const getRandomShorts = () => _axios.get(`/videos/random/shorts`);
 export const getRandomVideos = () => _axios.get(`/videos/random`);
 
