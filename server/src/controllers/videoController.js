@@ -102,28 +102,68 @@ export const addView = async (req, res, next) => {
   }
 };
 
-export const random = async (req, res, next) => {
+export const getAllVideos = async (req, res, next) => {
+  try {
+    const videos = await Video.aggregate([{ $match: { isShort: false } }]);
+
+    const l_videos = await fetchAllUserInfos(videos);
+
+    if (l_videos) {
+      res.status(200).json(l_videos);
+    } else {
+      res.status(200).json("No comment record found!");
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getAllShorts = async (req, res, next) => {
+  try {
+    const videos = await Video.aggregate([{ $match: { isShort: true } }]);
+
+    const l_videos = await fetchAllUserInfos(videos);
+
+    if (l_videos) {
+      res.status(200).json(l_videos);
+    } else {
+      res.status(200).json("No comment record found!");
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getRandomVideos = async (req, res, next) => {
   try {
     const videos = await Video.aggregate([
       { $match: { isShort: false } },
-      { $sample: { size: 40 } },
+      { $sample: { size: 20 } },
     ]);
 
+    const l_videos = await fetchAllUserInfos(videos);
+
+    if (l_videos) {
+      res.status(200).json(l_videos);
+    } else {
+      res.status(200).json("No comment record found!");
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getRandomShorts = async (req, res, next) => {
+  try {
     const shorts = await Video.aggregate([
       { $match: { isShort: true } },
-      { $sample: { size: 40 } },
+      { $sample: { size: 20 } },
     ]);
 
-    let l_videos = await fetchAllUserInfos(videos);
-    let l_shorts = await fetchAllUserInfos(shorts);
+    const l_shorts = await fetchAllUserInfos(shorts);
 
-    if ((l_videos && l_shorts) || l_shorts || l_videos) {
-      res
-        .status(200)
-        .json({
-          videos: l_videos ? l_videos : "No record found.",
-          shorts: l_shorts ? l_shorts : "No record found.",
-        });
+    if (l_shorts) {
+      res.status(200).json(l_shorts);
     } else {
       res.status(200).json("No comment record found!");
     }
@@ -134,7 +174,10 @@ export const random = async (req, res, next) => {
 
 export const getUserVideos = async (req, res, next) => {
   try {
-    const videos = await Video.find({ isShort: false, userId: req.params.id });
+    const videos = await Video.find({
+      isShort: false,
+      userId: req.params.id,
+    });
     if (videos) {
       let results = [];
       for (const video of videos) {
@@ -154,34 +197,12 @@ export const getUserVideos = async (req, res, next) => {
   }
 };
 
-export const getShorts = async (req, res, next) => {
-  try {
-    const videos = await Video.aggregate([
-      { $match: { isShort: true } },
-      { $sample: { size: 40 } },
-    ]);
-    if (videos) {
-      let results = [];
-      for (const video of videos) {
-        const tempUser = await User.findById(
-          video.userId,
-          "username profile subscribers"
-        ).exec();
-        const { _id, ...user } = tempUser._doc;
-        results.push({ ...video, ...user });
-      }
-      res.status(200).json(results);
-    } else {
-      res.status(200).json("No comment record found!");
-    }
-  } catch (err) {
-    next(err);
-  }
-};
-
 export const getUserShorts = async (req, res, next) => {
   try {
-    const videos = await Video.find({ isShort: true, userId: req.params.id });
+    const videos = await Video.find({
+      isShort: true,
+      userId: req.params.id,
+    });
     if (videos) {
       let results = [];
       for (const video of videos) {
