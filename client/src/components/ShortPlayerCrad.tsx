@@ -29,9 +29,6 @@ export const ShortPlayerCrad = ({ video }: videoProps) => {
 
   return (
     <div className={styles.plyrapper} ref={wrapperRef}>
-      {/* <div className={styles.cover}>
-        <img src={video?.imgUrl} alt="Short cover" />
-      </div> */}
       {!isVisible ? (
         <div className={styles.cover}>
           <img src={video?.imgUrl} alt="Short cober" />
