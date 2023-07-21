@@ -51,7 +51,8 @@ export const deleteVideo = (id: string, token: string) =>
   });
 
 export const getVideos = (type: string) => _axios.get(`/videos/${type}`);
-export const getShorts = () => _axios.get(`/videos/shorts/random`);
+export const getRandomShorts = () => _axios.get(`/videos/random/shorts`);
+export const getRandomVideos = () => _axios.get(`/videos/random`);
 
 export const getVideosByUserId = (userId: string | undefined) =>
   _axios.get(`/videos/${userId}`);

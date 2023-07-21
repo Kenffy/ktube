@@ -1,33 +1,32 @@
 .container {
   min-width: 200px;
-  max-width: 230px;
+  max-width: 250px;
   width: 100%;
-  min-height: 350px;
+  height: 350px;
   border-radius: 0.3rem;
   overflow: hidden;
   cursor: pointer;
-}
-
-.container:hover {
-  box-shadow: var(--box-shadow);
+  position: relative;
 }
 
 .cover {
-  height: 280px;
+  height: 100%;
   width: 100%;
   border-radius: 0.3rem;
   object-fit: cover;
 }
 
-.container:hover .cover {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
 .wrapper {
+  position: absolute;
+  left: 0;
+  bottom: 0;
   padding: 0.5rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  color: var(--txt-light);
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
 }
 
 .title {
@@ -54,14 +53,10 @@
   border-radius: 50%;
 }
 
-.actionWrapper {
-  display: flex;
-  flex-direction: column;
-  padding: 0 0.5rem;
-}
-
 .channel {
-  font-size: 11px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 0 0.5rem;
   cursor: pointer;
 }
 
@@ -72,18 +67,17 @@
 .connections {
   font-size: 11px;
   font-weight: 500;
-  margin-top: 0.2rem;
+  padding: 0 0.3rem;
+  border-left: 1px solid #eee;
 }
 
 @media (max-width: 580px) {
   .container {
     min-width: 180px;
-    min-height: 250px;
+    height: 280px;
   }
 
   .cover {
-    height: 280px;
-    width: 100%;
     object-fit: cover;
   }
 }
@@ -91,6 +85,6 @@
 @media (max-width: 320px) {
   .container {
     min-width: 100%;
-    min-height: 280px;
+    height: 350px;
   }
 }

@@ -5,12 +5,15 @@ import "../src/assets/css/editor.css";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-//import { Navbar } from "./components/Navbar";
 import { Topbar } from "./components/Topbar";
 import { useDispatch, useSelector } from "react-redux";
 import { StateProps } from "./types/types";
 import { loadUserData } from "./redux/userSlice";
-import { getUser } from "./services/services";
+import { getRandomShorts, getRandomVideos, getUser } from "./services/services";
+import {
+  fetchAllShortsSuccess,
+  fetchAllVideoSuccess,
+} from "./redux/videoSlice";
 
 const Home = lazy(() =>
   import("./pages/Home").then(({ Home }) => ({ default: Home }))
@@ -54,9 +57,17 @@ function App() {
     const fetchUserData = async () => {
       if (authUser) {
         try {
-          const res = await getUser(authUser?.id);
-          if (res.status === 200) {
-            dispatch(loadUserData(res.data));
+          const res_user = await getUser(authUser?.id);
+          const res_shorts = await getRandomShorts();
+          const res_videos = await getRandomVideos();
+          if (res_user.status === 200) {
+            dispatch(loadUserData(res_user.data));
+          }
+          if (res_shorts.status === 200) {
+            dispatch(fetchAllShortsSuccess(res_shorts.data));
+          }
+          if (res_videos.status === 200) {
+            dispatch(fetchAllVideoSuccess(res_videos.data));
           }
         } catch (error) {
           console.log(error);
@@ -76,7 +87,7 @@ function App() {
             <Route
               index
               element={
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense>
                   <Home type="random" />
                 </Suspense>
               }

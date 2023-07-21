@@ -5,12 +5,8 @@ import { Header } from "../components/Header";
 import { VideoCard } from "../components/VideoCard";
 import { ShortCard } from "../components/ShortCard";
 import { getVideos } from "../services/services";
-import { IVideo } from "../types/types";
-import { useDispatch } from "react-redux";
-import {
-  fetchAllShortsSuccess,
-  fetchAllVideoSuccess,
-} from "../redux/videoSlice";
+import { StateProps } from "../types/types";
+import { useSelector } from "react-redux";
 import { VideoSKCard } from "../components/VideoSKCard";
 import { ShortSKCard } from "../components/ShortSKCard";
 
@@ -18,37 +14,22 @@ type homeProps = {
   type: string;
 };
 export const Home = ({ type }: homeProps) => {
-  const dispatch = useDispatch();
   const { state } = useContext(ThemeContext);
+  const { shorts, videos } = useSelector((state: StateProps) => state.video);
   const theme = state.theme === "light" ? styles.light : styles.dark;
-  const [videos, setVideos] = useState<IVideo[]>([]);
-  const [shorts, setShorts] = useState<IVideo[]>([]);
+
+  const nSkeleton = 10;
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  let l_videosFirst = videos.slice(0, 10);
-  let l_videosSecond = videos.slice(11, 20);
-  let l_videosThird = videos.slice(20, videos?.length);
-  let l_shortsFirst = shorts.slice(0, 10);
-  let l_shortsSecond = shorts.slice(11, 20);
-
-  const nvideoSk = 10;
-  const nshortSk = 10;
+  const [videoData, setVideoData] = useState<any[]>([]);
 
   useEffect(() => {
     const loadVideos = async () => {
       setIsLoading(true);
       try {
-        const l_type = type === "random" ? "" : type;
-        const videoRes = await getVideos(l_type);
-        if (videoRes.status === 200) {
-          if (type === "random") {
-            setVideos(videoRes.data.videos);
-            setShorts(videoRes.data.shorts);
-            dispatch(fetchAllVideoSuccess(videoRes.data.videos));
-            dispatch(fetchAllShortsSuccess(videoRes.data.shorts));
-          } else {
-            setVideos(videoRes.data);
-          }
+        const res = await getVideos(type === "random" ? "" : type);
+        if (res.status === 200) {
+          setVideoData(res.data);
           setIsLoading(false);
         }
       } catch (error) {
@@ -56,34 +37,35 @@ export const Home = ({ type }: homeProps) => {
         setIsLoading(false);
       }
     };
+
     type && loadVideos();
-  }, [type, dispatch]);
+  }, [type]);
 
   return (
     <div className={`${styles.container} ${theme}`}>
       <div className={styles.wrapper}>
         <Header />
-        {!isLoading ? (
+        {!isLoading && videos?.length > 0 ? (
           <div className={styles.videoWrapper}>
-            {l_videosFirst.map((video) => (
+            {videos.map((video) => (
               <VideoCard key={video?._id} video={video} />
             ))}
           </div>
         ) : (
           <div className={styles.videoWrapper}>
-            {[...Array(nvideoSk)].map((item, index) => (
+            {[...Array(nSkeleton)].map((item, index) => (
               <VideoSKCard key={index} />
             ))}
           </div>
         )}
 
-        {!isLoading ? (
+        {!isLoading && shorts?.length > 0 ? (
           <>
-            {l_shortsFirst.length > 0 && (
+            {shorts.length > 0 && (
               <>
                 <hr />
                 <div className={styles.shortWrapper}>
-                  {l_shortsFirst.map((video) => (
+                  {shorts.map((video) => (
                     <ShortCard key={video?._id} video={video} />
                   ))}
                 </div>
@@ -94,20 +76,20 @@ export const Home = ({ type }: homeProps) => {
           <>
             <hr />
             <div className={styles.shortWrapper}>
-              {[...Array(nshortSk)].map((item, index) => (
+              {[...Array(nSkeleton)].map((item, index) => (
                 <ShortSKCard key={index} />
               ))}
             </div>
           </>
         )}
 
-        {!isLoading ? (
+        {!isLoading && videoData?.length > 0 ? (
           <>
-            {l_videosSecond.length > 0 && (
+            {videoData.length > 0 && (
               <>
                 <hr />
                 <div className={styles.videoWrapper}>
-                  {l_videosSecond.map((video) => (
+                  {videoData.map((video) => (
                     <VideoCard key={video?._id} video={video} />
                   ))}
                 </div>
@@ -118,52 +100,7 @@ export const Home = ({ type }: homeProps) => {
           <>
             <hr />
             <div className={styles.videoWrapper}>
-              {[...Array(nvideoSk)].map((item, index) => (
-                <VideoSKCard key={index} />
-              ))}
-            </div>
-          </>
-        )}
-
-        {!isLoading ? (
-          <>
-            {l_shortsSecond.length > 0 && (
-              <>
-                <hr />
-                <div className={styles.shortWrapper}>
-                  {l_shortsSecond.map((video) => (
-                    <ShortCard key={video?._id} video={video} />
-                  ))}
-                </div>
-              </>
-            )}
-          </>
-        ) : (
-          <div className={styles.shortWrapper}>
-            {[...Array(nshortSk)].map((item, index) => (
-              <ShortSKCard key={index} />
-            ))}
-          </div>
-        )}
-
-        {!isLoading ? (
-          <>
-            {l_videosThird.length > 0 && (
-              <>
-                <hr />
-                <div className={styles.videoWrapper}>
-                  {l_videosThird.map((video) => (
-                    <VideoCard key={video?._id} video={video} />
-                  ))}
-                </div>
-              </>
-            )}
-          </>
-        ) : (
-          <>
-            <hr />
-            <div className={styles.videoWrapper}>
-              {[...Array(nvideoSk)].map((item, index) => (
+              {[...Array(nSkeleton)].map((item, index) => (
                 <VideoSKCard key={index} />
               ))}
             </div>

@@ -24,10 +24,8 @@ export const ShortCard = ({ video }: videoProps) => {
             alt={video?.username}
             className={styles.profile}
           />
-          <div className={styles.actionWrapper}>
-            <span className={styles.channel}>{video?.username}</span>
-            <span className={styles.connections}>{video?.views} views</span>
-          </div>
+          <span className={styles.channel}>{video?.username}</span>
+          <span className={styles.connections}>{video?.views} views</span>
         </div>
       </div>
     </div>
