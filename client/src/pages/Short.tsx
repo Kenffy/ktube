@@ -1,11 +1,16 @@
 import styles from "../assets/css/pages/short.module.css";
 //import { shortVideos } from "../seeds/shortData";
 import { ShortPlayerCrad } from "../components/ShortPlayerCrad";
-import { useEffect, useState } from "react";
-import { IVideo } from "../types/types";
-import { useDispatch } from "react-redux";
-import { getShorts } from "../services/services";
+import { useEffect } from "react";
+import { StateProps } from "../types/types";
+import { useDispatch, useSelector } from "react-redux";
+import { getVideo } from "../services/services";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  fetchFailure,
+  fetchShortSuccess,
+  fetchStart,
+} from "../redux/videoSlice";
 
 type shortProps = {
   type: string;
@@ -16,31 +21,28 @@ export const Short = ({ type }: shortProps) => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const [videos, setVideos] = useState<IVideo[]>([]);
-
+  const { shorts } = useSelector((state: StateProps) => state.video);
   const shortId = params?.id;
 
+  console.log(type, shorts);
+
   useEffect(() => {
-    const loadVideos = async () => {
+    const loadVideo = async () => {
+      dispatch(fetchStart());
       try {
-        const res = await getShorts();
+        const res = await getVideo(shortId);
         if (res.status === 200) {
-          const tempVideos = res.data.sort((a: any, b: any) => {
-            return a._id === shortId ? -1 : b._id === shortId ? 1 : 0;
-          });
-          if (shortId) {
-            setVideos(tempVideos);
-          } else {
-            setVideos(res.data);
-          }
+          console.log(res.data);
+          dispatch(fetchShortSuccess(res.data));
         }
       } catch (error) {
+        dispatch(fetchFailure());
         console.log(error);
       }
     };
 
-    loadVideos();
-  }, [shortId, dispatch]);
+    type === "select" && shortId && loadVideo();
+  }, [type, shortId, dispatch]);
 
   return (
     <div className={styles.container}>
@@ -48,8 +50,8 @@ export const Short = ({ type }: shortProps) => {
         <i className="fa-solid fa-arrow-left"></i>
       </div>
       <div className={styles.wrapper}>
-        {videos.map((shVideo) => (
-          <ShortPlayerCrad key={shVideo._id} video={shVideo} />
+        {shorts.map((short) => (
+          <ShortPlayerCrad key={short?._id} video={short} />
         ))}
       </div>
     </div>

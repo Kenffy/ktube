@@ -34,6 +34,10 @@ export const videoSlice = createSlice({
     fetchShortSuccess: (state: VideoSliceProps, action) => {
       state.loading = false;
       state.currentShort = action.payload;
+      state.shorts = [
+        action.payload,
+        ...state.shorts.filter((s) => s._id !== action.payload._id),
+      ];
     },
     fetchAllVideoSuccess: (state: VideoSliceProps, action) => {
       state.loading = false;
@@ -79,6 +83,7 @@ export const videoSlice = createSlice({
 export const {
   fetchStart,
   fetchVideoSuccess,
+  fetchShortSuccess,
   fetchAllVideoSuccess,
   fetchAllShortsSuccess,
   fetchFailure,

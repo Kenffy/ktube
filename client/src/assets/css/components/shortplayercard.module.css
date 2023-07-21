@@ -1,19 +1,22 @@
-.playerWrapper,
-.playerWrapper video {
+.plyrapper {
+  width: 100%;
   min-height: 100%;
-  overflow: hidden;
-  position: relative;
   border-radius: 0.5rem;
+  overflow: hidden;
   scroll-snap-align: start;
+  position: relative;
 }
 
-.react-player {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  margin: auto;
+.plyrapper video {
+  height: 100%;
+  width: 100%;
+  object-fit: fill;
+}
+
+.plyrapper .cover img {
+  height: 100vh;
+  width: 100%;
+  object-fit: cover;
 }
 
 .rightWrapper {
@@ -56,7 +59,7 @@
   left: 0;
   color: var(--txt-light);
   padding: 0rem 0.8rem;
-  padding-bottom: 2rem;
+  padding-bottom: 3rem;
   padding-top: 0.5rem;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.4);
@@ -107,8 +110,7 @@
 }
 
 @media (max-width: 580px) {
-  .playerWrapper {
-    margin: 0;
+  .plyrapper {
     border-radius: 0;
   }
 }

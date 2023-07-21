@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import styles from "../assets/css/components/shortplayercard.module.css";
 import useElementOnScreen from "../hooks/useElementOnScreen";
 import { ScrollOption } from "../types/types";
@@ -12,33 +12,51 @@ type videoProps = {
 export const ShortPlayerCrad = ({ video }: videoProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<ReactPlayer>(null);
+  const [playing, setPlaying] = useState<boolean>(false);
 
   const options: ScrollOption = {
     root: null,
     rootMargin: "0px",
     threshold: 0.3,
   };
-  const isVisibile = useElementOnScreen(options, wrapperRef);
+
+  const isVisible = useElementOnScreen(options, wrapperRef);
+  const handleOnReady = () => {
+    if (playerRef.current) {
+      setPlaying(true);
+    }
+  };
 
   return (
-    <div className={styles.playerWrapper} ref={wrapperRef}>
-      <ReactPlayer
-        height="100%"
-        width="100%"
-        controls
-        url={video?.videoUrl}
-        playing={isVisibile}
-        autoPlay={isVisibile}
-        ref={playerRef}
-        config={{
-          youtube: {
-            playerVars: { showinfo: 1 },
-          },
-          facebook: {
-            appId: "12345",
-          },
-        }}
-      />
+    <div className={styles.plyrapper} ref={wrapperRef}>
+      {/* <div className={styles.cover}>
+        <img src={video?.imgUrl} alt="Short cover" />
+      </div> */}
+      {!isVisible ? (
+        <div className={styles.cover}>
+          <img src={video?.imgUrl} alt="Short cober" />
+        </div>
+      ) : (
+        <ReactPlayer
+          height="100%"
+          width="100%"
+          controls
+          url={video?.videoUrl}
+          playing={playing}
+          autoPlay={playing}
+          ref={playerRef}
+          onReady={handleOnReady}
+          config={{
+            youtube: {
+              playerVars: { showinfo: 1 },
+            },
+            facebook: {
+              appId: "12345",
+            },
+          }}
+        />
+      )}
+
       <div className={styles.rightWrapper}>
         <div className={styles.rightItem}>
           <div className={styles.rightIcon}>
