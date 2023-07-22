@@ -17,14 +17,9 @@ import {
 type upsertProps = {
   upsertVideo?: IVideo;
   setOnEdit?: React.Dispatch<React.SetStateAction<Boolean>>;
-  setUpdatedVideo?: React.Dispatch<React.SetStateAction<any>>;
 };
 
-export const AddVideo = ({
-  upsertVideo,
-  setUpdatedVideo,
-  setOnEdit,
-}: upsertProps) => {
+export const AddVideo = ({ upsertVideo, setOnEdit }: upsertProps) => {
   const { authUser } = useSelector((state: StateProps) => state.user);
 
   const [title, setTitle] = useState<string>(
@@ -136,8 +131,6 @@ export const AddVideo = ({
       const res = await updateVideo(tmpVideo, authUser?.accessToken);
       if (res.status === 200) {
         dispatch(fetchVideoSuccess(res.data));
-        //navigate(`/videos/${res.data?._id}`);
-        setUpdatedVideo && setUpdatedVideo(res.data);
         setOnEdit && setOnEdit(false);
       }
     } else {

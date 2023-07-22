@@ -1,9 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "../assets/css/components/comments.module.css";
 import avatar from "../assets/images/avatar.png";
-import { createComment, getCommentByVideoId } from "../services/services";
+import {
+  createComment,
+  dislikeComment,
+  getCommentByVideoId,
+  likeComment,
+} from "../services/services";
 import { format } from "timeago.js";
 import { useNavigate } from "react-router-dom";
+//import { useDispatch } from "react-redux";
 
 type commentProps = {
   videoId: string;
@@ -11,6 +17,7 @@ type commentProps = {
 };
 export const VideoComments = ({ videoId, user }: commentProps) => {
   const navigate = useNavigate();
+  //const dispatch = useDispatch();
 
   const [comments, setComments] = useState<any[]>([]);
   const commentRef = useRef<HTMLTextAreaElement>(null);
@@ -41,6 +48,34 @@ export const VideoComments = ({ videoId, user }: commentProps) => {
     }
   };
 
+  const handleLike = async (comment: any) => {
+    try {
+      if (comment?.likes?.includes(user?.id)) {
+        await dislikeComment(comment?._id, user?.accessToken);
+        comment?.likes?.filter((id: string) => id !== user?.id);
+        const updatedComment = {
+          ...comment,
+          likes: comment?.likes?.filter((id: string) => id !== user?.id),
+        };
+        setComments((prev) => [
+          ...prev.map((com) =>
+            com?._id === updatedComment?._id ? updatedComment : com
+          ),
+        ]);
+        //dispatch(dislike(user?._id));
+      } else {
+        await likeComment(comment?._id, user?.accessToken);
+        comment?.likes?.push(user?.id);
+        setComments((prev) => [
+          ...prev.map((com) => (com?._id === comment?._id ? comment : com)),
+        ]);
+        //dispatch(like(user?._id));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleComment = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (commentRef.current) {
@@ -65,13 +100,17 @@ export const VideoComments = ({ videoId, user }: commentProps) => {
   return (
     <div className={styles.container}>
       <span>
-        {comments?.length < 1
-          ? `${comments?.length} Comment`
-          : `${comments?.length} Comments`}
+        {comments?.length > 1
+          ? `${comments?.length} Comments`
+          : `${comments?.length} Comment`}
       </span>
       <form className={styles.formWrapper}>
         <div className={styles.inputWrapper}>
-          <img src={avatar} alt="" className={styles.commentUser} />
+          <img
+            src={user?.profile || avatar}
+            alt=""
+            className={styles.commentUser}
+          />
           <textarea
             required
             ref={commentRef}
@@ -113,8 +152,17 @@ export const VideoComments = ({ videoId, user }: commentProps) => {
                 <p>{comment?.desc}</p>
               </div>
               <div className={styles.commentActions}>
-                <div className={`${styles.commentActionItem} ${styles.like}`}>
-                  <i className="fa-regular fa-heart"></i>
+                <div
+                  onClick={() => handleLike(comment)}
+                  className={`${styles.commentActionItem} ${styles.like}`}
+                >
+                  <i
+                    className={
+                      comment?.likes?.includes(user?.id)
+                        ? "fa-solid fa-heart"
+                        : "fa-regular fa-heart"
+                    }
+                  ></i>
                   <span>{comment?.likes?.length}</span>
                 </div>
                 <div className={styles.commentActionItem}>

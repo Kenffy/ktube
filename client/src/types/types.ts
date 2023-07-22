@@ -100,11 +100,20 @@ export type UserSliceProps = {
 export type VideoSliceProps = {
   videos: IVideo[];
   shorts: IVideo[];
-  currentVideo: IVideo | null;
-  currentShort: IVideo | null;
+  currentVideo: any;
+  currentShort: any;
   loading: boolean;
   error: boolean;
 };
+
+// export type VideoSliceProps = {
+//   videos: IVideo[];
+//   shorts: IVideo[];
+//   currentVideo: IVideo | null;
+//   currentShort: IVideo | null;
+//   loading: boolean;
+//   error: boolean;
+// };
 
 export type StateProps = {
   user: UserSliceProps;
