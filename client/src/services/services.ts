@@ -63,3 +63,17 @@ export const getShortsByUserId = (userId: string | undefined) =>
   _axios.get(`/videos/shorts/${userId}`);
 export const getVideo = (id: string | undefined) =>
   _axios.get(`/videos/find/${id}`);
+
+// Comments
+export const createComment = (comment: any, token: string | undefined) =>
+  _axiosAuth.post(`/comments`, comment, {
+    headers: { authorization: "Bearer " + token },
+  });
+
+export const deleteComment = (id: string, token: string | undefined) =>
+  _axiosAuth.delete(`/comments/${id}`, {
+    headers: { authorization: "Bearer " + token },
+  });
+
+export const getCommentByVideoId = (id: string) =>
+  _axios.get(`/comments/${id}`);

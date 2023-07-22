@@ -78,8 +78,13 @@
 }
 
 .commentUserInfos span {
+  cursor: pointer;
   font-size: 13px;
   padding: 0 0.5rem;
+}
+
+.channel:hover {
+  text-decoration: underline;
 }
 
 .commentBody {

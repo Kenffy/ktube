@@ -15,13 +15,16 @@ import { AddVideo } from "./AddVideo";
 
 export const Single = () => {
   const route = useParams();
+  const videoId = route.id;
   const navigate = useNavigate();
 
   const [video, setVideo] = useState<any>({});
   const [onMore, setOnMore] = useState<Boolean>(false);
   const [onEdit, setOnEdit] = useState<Boolean>(false);
   const { videos } = useSelector((state: StateProps) => state.video);
-  const { currentUser } = useSelector((state: StateProps) => state.user);
+  const { authUser, currentUser } = useSelector(
+    (state: StateProps) => state.user
+  );
 
   const isFriend =
     (video?.userId !== currentUser?._id &&
@@ -31,7 +34,7 @@ export const Single = () => {
   useEffect(() => {
     const loadVideo = async () => {
       try {
-        const res = await getVideo(route.id);
+        const res = await getVideo(videoId);
         if (res.status === 200) {
           setVideo(res.data);
         }
@@ -39,17 +42,8 @@ export const Single = () => {
         console.log(error);
       }
     };
-
-    if (route.id !== "test") {
-      loadVideo();
-    } else {
-      setVideo({
-        title: `Drogues : labos et trafiquants partagent le magot - Politique & Eco
-        n°394 avec Michel Gandilhon`,
-        videoUrl: `https://www.youtube.com/watch?v=TX9qSaGXFyg`,
-      });
-    }
-  }, [route.id]);
+    videoId && loadVideo();
+  }, [videoId]);
 
   const handleOnProfile = () => {
     navigate(`/channel/${video?.userId}`);
@@ -158,7 +152,7 @@ export const Single = () => {
                 </span>
               </div>
 
-              <VideoComments />
+              <VideoComments videoId={videoId || ""} user={authUser} />
             </div>
             <div className={styles.rightWrapper}>
               <div className={styles.videoWrapper}>
