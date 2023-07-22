@@ -26,6 +26,7 @@ import {
   like,
 } from "../redux/videoSlice";
 import { subscription } from "../redux/userSlice";
+import { VideoMenu } from "../components/VideoMenu";
 
 export const Single = () => {
   const route = useParams();
@@ -34,6 +35,7 @@ export const Single = () => {
   const dispatch = useDispatch();
 
   const [onMore, setOnMore] = useState<Boolean>(false);
+  const [onMenu, setOnMenu] = useState<Boolean>(false);
   const [onEdit, setOnEdit] = useState<Boolean>(false);
   const { videos, currentVideo } = useSelector(
     (state: StateProps) => state.video
@@ -173,8 +175,14 @@ export const Single = () => {
                   <div className={styles.actionItem}>
                     <i className="fa-solid fa-share"></i>
                   </div>
-                  <div className={styles.actionItem}>
+                  <div
+                    tabIndex={0}
+                    onBlur={() => setOnMenu(false)}
+                    onClick={() => setOnMenu((prev) => !prev)}
+                    className={`${styles.actionItem} ${styles.menuIcon}`}
+                  >
                     <i className="fa-solid fa-ellipsis-vertical"></i>
+                    {onMenu && <VideoMenu />}
                   </div>
                 </div>
               </div>

@@ -9,6 +9,7 @@ import {
 } from "../services/services";
 import { format } from "timeago.js";
 import { useNavigate } from "react-router-dom";
+import { CommentMenu } from "./CommentMenu";
 //import { useDispatch } from "react-redux";
 
 type commentProps = {
@@ -18,7 +19,8 @@ type commentProps = {
 export const VideoComments = ({ videoId, user }: commentProps) => {
   const navigate = useNavigate();
   //const dispatch = useDispatch();
-
+  const [onMenu, setOnMenu] = useState<Boolean>(false);
+  const [currComment, setCurrComment] = useState<any>(null);
   const [comments, setComments] = useState<any[]>([]);
   const commentRef = useRef<HTMLTextAreaElement>(null);
 
@@ -97,6 +99,11 @@ export const VideoComments = ({ videoId, user }: commentProps) => {
     }
   };
 
+  const handleOnMenu = (comment: any) => {
+    setCurrComment(comment);
+    setOnMenu((prev) => !prev);
+  };
+
   return (
     <div className={styles.container}>
       <span>
@@ -168,8 +175,16 @@ export const VideoComments = ({ videoId, user }: commentProps) => {
                 <div className={styles.commentActionItem}>
                   <i className="fa-solid fa-share"></i>
                 </div>
-                <div className={styles.commentActionItem}>
+                <div
+                  tabIndex={0}
+                  onBlur={() => setOnMenu(false)}
+                  onClick={() => handleOnMenu(comment)}
+                  className={`${styles.commentActionItem} ${styles.menuIcon}`}
+                >
                   <i className="fa-solid fa-ellipsis-vertical"></i>
+                  {onMenu && currComment?._id === comment?._id && (
+                    <CommentMenu userId={user?.id} owner={comment?.userId} />
+                  )}
                 </div>
               </div>
             </div>

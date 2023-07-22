@@ -1,0 +1,38 @@
+.wrapper {
+  position: absolute;
+  top: 1.6rem;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  border-radius: 0.3rem;
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
+  z-index: 20;
+}
+
+.wrapper.light {
+  background-color: var(--bg-light);
+  color: var(--txt-dark);
+}
+
+.wrapper.dark {
+  background-color: var(--bg-dark);
+  color: var(--txt-light);
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.8rem;
+  transition: 0.3s all;
+}
+
+.menuItem:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.menuItem span {
+  font-size: 14px;
+  padding: 0 0.2rem;
+}
