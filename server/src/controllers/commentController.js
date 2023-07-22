@@ -70,3 +70,31 @@ export const getComments = async (req, res, next) => {
     next(err);
   }
 };
+
+export const like = async (req, res, next) => {
+  const id = req.user.id;
+  const commentId = req.params.commentId;
+  try {
+    await Comment.findByIdAndUpdate(commentId, {
+      $addToSet: { likes: id },
+      $pull: { dislikes: id },
+    });
+    res.status(200).json("The comment has been liked.");
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const dislike = async (req, res, next) => {
+  const id = req.user.id;
+  const commentId = req.params.commentId;
+  try {
+    await Comment.findByIdAndUpdate(commentId, {
+      $addToSet: { dislikes: id },
+      $pull: { likes: id },
+    });
+    res.status(200).json("The comment has been disliked.");
+  } catch (err) {
+    next(err);
+  }
+};

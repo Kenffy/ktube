@@ -18,6 +18,10 @@ const CommentSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+    dislikes: {
+      type: [String],
+      default: [],
+    },
   },
   { timestamps: true }
 );

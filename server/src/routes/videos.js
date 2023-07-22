@@ -14,6 +14,8 @@ import {
   getRandomVideos,
   getRandomShorts,
   getAllVideos,
+  like,
+  dislike,
 } from "../controllers/videoController.js";
 import { verifyToken } from "../verifyToken.js";
 
@@ -22,6 +24,8 @@ const router = express.Router();
 //create a video
 router.post("/", verifyToken, addVideo);
 router.put("/:id", verifyToken, updateVideo);
+router.put("/like/:videoId", verifyToken, like);
+router.put("/dislike/:videoId", verifyToken, dislike);
 router.put("/view/:id", addView);
 router.delete("/:id", verifyToken, deleteVideo);
 
