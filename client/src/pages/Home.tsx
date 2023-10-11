@@ -27,11 +27,13 @@ export const Home = ({ type }: homeProps) => {
   useEffect(() => {
     const loadVideos = async () => {
       setIsLoading(true);
+      if (type === "random") {
+        videos && setVideoData([...videos]);
+        setIsLoading(false);
+        return;
+      }
       try {
-        const res = await getVideos(
-          type === "random" ? "" : type,
-          authUser?.accessToken
-        );
+        const res = await getVideos(type, authUser?.accessToken);
         if (res.status === 200) {
           setVideoData(res.data);
           setIsLoading(false);
@@ -43,7 +45,7 @@ export const Home = ({ type }: homeProps) => {
     };
 
     type && loadVideos();
-  }, [type, authUser?.accessToken]);
+  }, [type, videos, authUser?.accessToken]);
 
   return (
     <div className={`${styles.container} ${theme}`}>
